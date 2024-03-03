@@ -1,0 +1,20 @@
+[
+  {
+    "app_id": "com.taymay.chatbot",
+    "bool_value": null,
+    "data_version": "default",
+    "double_value": null,
+    "key": "iap",
+    "long_value": null,
+    "string_value": "remove_ad,upgrade_01"
+  },
+  {
+    "app_id": "com.taymay.chatbot",
+    "bool_value": true,
+    "data_version": "default",
+    "double_value": 24.0,
+    "key": "test",
+    "long_value": 123.0,
+    "string_value": "test"
+  }
+]

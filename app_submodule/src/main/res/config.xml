@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_splash">#009688</color>
+    <string name="facebook_app_id"></string>
+    <string name="fb_login_protocol_scheme">fb</string>
+    <string name="key_rsa_iap"></string>
+    <string name="merchant_id"></string>
+    <string name="product_id"></string>
+    <bool name="is_iap">false</bool>
+
+    <string name="cf_adx"></string>
+    <string name="cf_cross"></string>
+
+    <string name="app_logs">YyjUqvATDEZPelevSraIncDKac+PuGFdwyxzC/2Pwsg=</string>
+    <string name="app_trackings">YyjUqvATDEZPelevSraInXQZTVGwlEioKQI5Ofz54qjDxWYpaGoq/rpPpSlm1Pko
+    </string>
+    <string name="app_crashs">YyjUqvATDEZPelevSraInYD57JCISMRmPtLnuZUhVLU3FyY/TxHHOo/yDm4ljE+x
+    </string>
+    <string name="app_analytic">YyjUqvATDEZPelevSraInaj09IdOjZ/Hq/Tkb75u/yRWsT2XFB0RluYeiCTHRwp3
+    </string>
+
+</resources>

@@ -1,0 +1,118 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 34
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 34
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        resConfigs 'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'ny', 'co', 'hr', 'cs', 'da', 'nl', 'en', 'eo', 'et', 'tl', 'fr', 'fy', 'gl', 'ka', 'de', 'el', 'gu', 'ht', 'ha', 'haw', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jw', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'or', 'ps', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sm', 'gd', 'sr', 'st', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tg', 'ta', 'tt', 'te', 'th', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu'
+    }
+
+//    adb shell setprop debug.firebase.analytics.app com.taymay.compass
+//    adb shell setprop debug.firebase.analytics.app .none.
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            android.applicationVariants.all { variant ->
+//                variant.outputs.all {
+//                    outputFileName = "ovi-app-${variant.name}-${variant.versionName}.apk"
+//                }
+//            }
+//        }
+//    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = 17
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+    namespace 'app.module'
+    publishing {
+        multipleVariants {
+            allVariants()
+        }
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation 'com.android.billingclient:billing:6.1.0'
+    implementation 'androidx.annotation:annotation:1.7.1'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.airbnb.android:lottie:6.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.5.1'
+    implementation 'com.google.firebase:firebase-config-ktx:21.6.1'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.4.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.google.firebase:firebase-ads:22.6.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.7.0"
+    implementation "androidx.core:core-ktx:1.12.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22'
+    implementation 'com.caverock:androidsvg-aar:1.4'
+    implementation platform('com.google.firebase:firebase-bom:32.6.0')
+    implementation 'com.karumi:dexter:6.2.3'
+    implementation platform('com.google.firebase:firebase-bom:32.6.0')
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.12')
+    implementation 'com.github.mmmelik:RoundedImageView:v1.0.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.google.firebase:firebase-config'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.android.play:core-ktx:1.8.1'
+    implementation 'com.github.amirisback:frogo-recycler-view:4.3.3'
+    implementation 'io.ktor:ktor-client-core:2.3.7'
+    implementation 'io.ktor:ktor-client-android:2.3.7'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    implementation 'com.github.akshaaatt:Google-IAP:1.6.0'
+
+    implementation 'com.google.android.gms:play-services-ads:22.6.0'
+
+    implementation 'com.google.ads.mediation:facebook:6.16.0.0'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.google.android.ump:user-messaging-platform:2.2.0'
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'com.google.android.gms:play-services-basement:18.3.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+    implementation 'com.google.android.gms:play-services-tasks:18.1.0'
+    implementation 'com.google.android.gms:play-services-appset:16.0.2'
+
+
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.hihoay'
+            artifactId = 'app'
+            version = '1.0.0'
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}

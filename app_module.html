@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>app_module.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p id="top"/>
+<h1 id="module-cho-android---taymayio">Module cho Android - Taymay.io</h1>
+<img src="https://play-lh.googleusercontent.com/kYGVCEZebP5uG0oJeC6u7KJJj3WhYBBqv-k4o4gxHxZO_oHSM2AIlaPDpZEg2FkSfj8" width=10% height=10%>
+</img>
+<table>
+<thead>
+<tr>
+<th>Các Mục</th>
+<th>Mô tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#i-t%C3%ADch-h%E1%BB%A3p-v%C3%A0o-d%E1%BB%B1-%C3%A1n-android-studio">I, Tích hợp vào dự án (Android Studio)</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#ii-c%C3%A0i-%C4%91%E1%BA%B7t-t%E1%BA%A3i-c%E1%BA%A5u-h%C3%ACnh-qu%E1%BA%A3ng-c%C3%A1o">II, Cài đặt tải cấu hình quảng cáo</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#iii-c%C3%A0i-%C4%91%E1%BA%B7t-hi%E1%BB%83n-th%E1%BB%8B-c%C3%A1c-v%E1%BB%8B-tr%C3%AD-qu%E1%BA%A3ng-c%C3%A1o-trong-app">III, Cài đặt hiển thị các vị trí quảng cáo trong App</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#iv-qu%E1%BA%A3ng-c%C3%A1o-m%C3%A0n-h%C3%ACnh-introtutorial-v%C3%A0-c%E1%BA%A5u-h%C3%ACnh-c%C3%A0i-%C4%91%E1%BA%B7t">IV, Quảng cáo màn hình Intro/Tutorial và Cấu hình cài đặt</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#v-c%C3%A1c-ti%E1%BB%87n-%C3%ADch-kh%C3%A1c">V, Các tiện ích khác</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#v-c%C3%A1c-ti%E1%BB%87n-%C3%ADch-kh%C3%A1c">VI, Hệ thống cấu hình dữ liệu trong App</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#vii-h%E1%BB%87-th%E1%BB%91ng-in-app-purchase-thanh-to%C3%A1n-trong-app">VII, Hệ thống In App Purchase (Thanh toán trong App)</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-t%C3%ADch-h%E1%BB%A3p-v%C3%A0o-d%E1%BB%B1-%C3%A1n-android-studio">I, Tích hợp vào dự án (Android Studio)</h2>
+<p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>
+<ul>
+<li>Tích hợp vào Android Studio:</li>
+</ul>
+<ol>
+<li>Thêm vô <code>build.gradle</code>:</li>
+</ol>
+<ul>
+<li>Phiên
+bản: <a href="https://jitpack.io/#com.gitlab.taymay/com.taymay.app.module"><img src="https://jitpack.io/v/com.gitlab.taymay/com.taymay.app.module.svg" alt=""></a></li>
+</ul>
+<pre class="hljs"><code><div>implementation <span class="hljs-string">'com.gitlab.taymay:com.taymay.app.module:&lt;version_name&gt;'</span>
+</div></code></pre>
+<ol start="2">
+<li>Thêm vô <code>settings.gradle</code>:</li>
+</ol>
+<pre class="hljs"><code><div>  repositories {
+    mavenCentral()
+        gradlePluginPortal()
+        maven { url <span class="hljs-string">'https://jitpack.io'</span> }
+        maven {
+            url <span class="hljs-string">'https://artifact.bytedance.com/repository/pangle/'</span>
+        }
+        maven {
+            url <span class="hljs-string">'https://android-sdk.is.com/'</span>
+        }
+        maven {
+            url <span class="hljs-string">'https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea'</span>
+        }
+        maven {
+            url <span class="hljs-string">"https://sdk.tapjoy.com/"</span>
+        }
+}
+</div></code></pre>
+<ol start="3">
+<li>Thêm các tệp cấu hình mặc định vào thư mục <code>assets</code>:</li>
+</ol>
+<blockquote>
+<p><code>ads.json</code> là tệp cấu hình mặc định các vị trí quảng cáo.</p>
+</blockquote>
+<ul>
+<li>Lấy nội dung tệp <code>ads.json</code> bằng cách kiểm tra <code>Logcat</code> trên <code>Android Studio</code> sau khi chạy ứng
+dụng sẽ in ra đường dẫn chứa nội dung của tệp <code>copy</code> nội dung từ đường dẫn và <code>dán</code> vào
+tệp <code>ads.json</code>, đường dẫn định dạng sau:</li>
+</ul>
+<pre class="hljs"><code><div>---------------------&gt;ad_version   https:<span class="hljs-comment">//bot.taymay.io/ad_version/&lt;app_package_name&gt;.json</span>
+</div></code></pre>
+<blockquote>
+<p><code>data.json</code> là tập cấu hình mặc định các dữ liệu sử dụng.</p>
+</blockquote>
+<ul>
+<li>Lấy nội dung tệp <code>data.json</code> bằng cách kiểm tra <code>Logcat</code> trên <code>Android Studio</code> sau khi chạy ứng
+dụng sẽ in ra đường dẫn chứa nội dung của tệp <code>copy</code> nội dung từ đường dẫn và <code>dán</code> vào
+tệp <code>data.json</code>, đường dẫn có định dạng sau:</li>
+</ul>
+<pre class="hljs"><code><div>---------------------&gt;data_version   https:<span class="hljs-comment">//bot.taymay.io/data_version/&lt;app_package_name&gt;.json</span>
+</div></code></pre>
+<h2 id="ii-c%C3%A0i-%C4%91%E1%BA%B7t-t%E1%BA%A3i-c%E1%BA%A5u-h%C3%ACnh-qu%E1%BA%A3ng-c%C3%A1o">II, Cài đặt tải cấu hình quảng cáo</h2>
+<p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>
+<p>4.<strong>(Phần này trờ xuống thì App đã được cài rồi nên mọi người có thể bỏ qua)</strong> Thêm vào Manifest
+thông tin App ID của Admob nếu chưa có (không sẽ bị crash, dưới đây là ID test
+khi nào có ID thật thì thay thế) (meta-data được thêm ở vị trí trong thẻ <code>application</code>)</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"com.google.android.gms.ads.APPLICATION_ID"</span>
+    <span class="hljs-attr">android:value</span>=<span class="hljs-string">"&lt;id của app trên Admob&gt;"</span> /&gt;</span>
+</div></code></pre>
+<ol start="5">
+<li>Gắn Firebase vào App nếu chưa gắn:</li>
+</ol>
+<ul>
+<li>
+<p>Thêm filre <code>google-services.json</code> vào thư mục <code>app</code> của project.</p>
+</li>
+<li>
+<p>Trên Android Studio vào
+menu <code>Tools</code> &gt; <code>Firebase</code> &gt; <code>Analytics</code> &gt; <code>Get started with Google Analytics [Kotlin]</code> &gt; chọn
+module <code>app</code></p>
+</li>
+<li>
+<p>Trên Android Studio vào
+menu <code>Tools</code> &gt; <code>Firebase</code> &gt; <code>Crashlytics</code> &gt; <code>Get started with Firebase Crashlytics [Kotlin]</code> &gt;
+chọn module <code>app</code></p>
+</li>
+</ul>
+<ol start="6">
+<li>Cấu hình <code>Remote Configs</code>:</li>
+</ol>
+<ul>
+<li>Key là <code>ad_version</code> giá trị string là <code>default</code></li>
+<li>Key là <code>data_version</code> giá trị string là <code>default</code></li>
+</ul>
+<ol start="7">
+<li>Rebuild lại Project</li>
+</ol>
+<p id="abcd"></p>
+<h4 id="1-th%C3%AAm-v%C3%A0o-oncreate-application-class">1, Thêm vào <code>onCreate()</code> <code>Application</code> <em>class</em></h4>
+<pre class="hljs"><code><div>taymay(<span class="hljs-keyword">this</span>, <span class="hljs-string">"remove_ad,...,..."</span>, Mediation(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>), BuildConfig.DEBUG)<span class="hljs-comment">// để khởi tạo các giá trị , remove_ad là mã xóa quảng cáo</span>
+</div></code></pre>
+<h4 id="2-l%E1%BA%A5y-c%E1%BA%A5u-h%C3%ACnh-qu%E1%BA%A3ng-c%C3%A1o-%C4%91%E1%BB%83-s%E1%BB%AD-d%E1%BB%A5ng">2, Lấy cấu hình quảng cáo để sử dụng</h4>
+<p><span style="color:red;">Lưu ý phần này chỉ gọi 1 lần, thường gọi ở ngay trong <code>onCreate()</code> màn Splash. Tránh gọi 2 hoặc nhiều lần sẽ khởi tạo lại cấu hình quảng cáo trong App gây lỗi Treo ở màn hình Splash</span></p>
+<pre class="hljs"><code><div>
+    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> {
+        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState)
+        setContentView(taymaySplashViewNoAnim(getString(R.string.app_name),R.mipmap.ic_launcher,layoutInflater).root)
+        taymayGetAdVersion(<span class="hljs-keyword">this</span>) {
+
+        <span class="hljs-comment">//... Các lệnh của chương trình tiếp theo</span>
+
+        }
+    }
+
+</div></code></pre>
+<ul>
+<li>Có thể kiểm tra tải được dữ liệu cấu hình quảng cáo thành công hay chưa:</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> isAdsReady = isAdVersionReady()
+</div></code></pre>
+<h2 id="iii-c%C3%A0i-%C4%91%E1%BA%B7t-hi%E1%BB%83n-th%E1%BB%8B-c%C3%A1c-v%E1%BB%8B-tr%C3%AD-qu%E1%BA%A3ng-c%C3%A1o-trong-app">III, Cài đặt hiển thị các vị trí quảng cáo trong App</h2>
+<p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>
+<ul>
+<li>Các tiện ích sử dụng ở những gói sau, kiểm tra để tránh bị nhầm lẫn:</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> app.module.utils.*
+</div></code></pre>
+<ul>
+<li>Hiển thị ad không có <code>callback</code> dành cho các định dạng <code>Banner</code> <code>Native</code> để không cần phải kiểm
+tra lại trạng thái của quảng cáo</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// adName: tên quảng cáo</span>
+<span class="hljs-comment">// adViewContainer: view chứa quảng cáo là LinearLayout</span>
+showAdInView(Activity.<span class="hljs-keyword">this</span>, adName, adViewContainer)
+</div></code></pre>
+<ul>
+<li>Mẫu khai báo ViewContainer chứa quảng cáo</li>
+</ul>
+<pre class="hljs"><code><div>
+<span class="hljs-tag">&lt;<span class="hljs-name">LinearLayout</span>
+  <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/ll_top_banner"</span>
+  <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"match_parent"</span>
+  <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span>
+  <span class="hljs-attr">android:orientation</span>=<span class="hljs-string">"vertical"</span>
+/&gt;</span>
+</div></code></pre>
+<ul>
+<li>
+<p>Hiển thị quảng cáo có <code>callback</code> sử dụng cho các định dạng <code>Interstitial</code> <code>Open Ad</code> <code>Reward</code> ...
+để có thể kiểm tra lại trạng thái của quảng cáo</p>
+<ul>
+<li>Ví dụ sử dụng cho quảng cáo màn <code>Splash</code></li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div>
+  loadAndShowAdCallback( <span class="hljs-comment">// tự động tải và hiển thị quảng cáo</span>
+    Activity.<span class="hljs-keyword">this</span>,
+    <span class="hljs-string">"open_app"</span>, <span class="hljs-comment">// tên quảng cáo</span>
+    LinearLayout(<span class="hljs-keyword">this</span>) <span class="hljs-comment">// view chứa quảng cáo là LinearLayout</span>
+  ) { myAd -&gt; <span class="hljs-comment">// callback có tham số là đối tượng `MyAd`</span>
+    <span class="hljs-keyword">when</span> (myAd.adState) { <span class="hljs-comment">// check trạng thái của quảng cáo hiện tại</span>
+      AdState.Close, AdState.Done -&gt; goToMain()
+      AdState.Show -&gt; setContentView(LinearLayout(Taymay.AppContext))
+      AdState.Timeout, AdState.Error -&gt; goToMain()
+      <span class="hljs-keyword">else</span> -&gt; {}
+    }
+  }
+</div></code></pre>
+<ul>
+<li>Các trạng thái của quảng cáo</li>
+</ul>
+<blockquote>
+<p><code>Init</code> : quảng cáo được khởi tạo</p>
+</blockquote>
+<blockquote>
+<p><code>Loaded</code> : quảng cáo đã tải thành công</p>
+</blockquote>
+<blockquote>
+<p><code>Timeout</code> : quảng cáo tải quá thời gian cho phép</p>
+</blockquote>
+<blockquote>
+<p><code>Error</code> : quảng cáo bị lỗi</p>
+</blockquote>
+<blockquote>
+<p><code>Show</code> : quảng cáo đã hiển thị</p>
+</blockquote>
+<blockquote>
+<p><code>Close</code> : quảng cáo đã đóng</p>
+</blockquote>
+<blockquote>
+<p><code>Done</code> : quảng cáo đã hoàn thành (Dành cho quảng cáo Reward)</p>
+</blockquote>
+<blockquote>
+<p><code>AdClick</code> : quảng cáo được click</p>
+</blockquote>
+<ul>
+<li>Khởi tạo quảng cáo quay trờ lại <code>App (Open Ad)</code> sử dụng trong Activity</li>
+</ul>
+<pre class="hljs"><code><div>initReturnAppAd(Activity.<span class="hljs-keyword">this</span>,<span class="hljs-string">"return_app"</span>) <span class="hljs-comment">// tên quảng cáo</span>
+</div></code></pre>
+<ul>
+<li>Kiểm tra xem quảng cáo đã được tải trước chưa:</li>
+</ul>
+<pre class="hljs"><code><div>isAdLoaded(<span class="hljs-string">"ad_name_here"</span>)
+</div></code></pre>
+<ul>
+<li>Tải trước quảng cáo</li>
+</ul>
+<pre class="hljs"><code><div>loadAdsToCache(Activity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"ad_name_1"</span>,<span class="hljs-string">"ad_name_2"</span>,<span class="hljs-string">"ad_name_3"</span>,...)
+</div></code></pre>
+<ul>
+<li>Hiển thị <code>Activity</code> tải quảng cáo và sau khi tải xong thì hiện quảng cáo chèn giữa, chuyển màn khi
+đóng một <code>Activity</code> (ví dụ: Đóng <code>Activity</code> hiện tại và quay lại <code>Activity</code> cũ trước đó)</li>
+</ul>
+<pre class="hljs"><code><div>loadAndShowAdCloseActivity(Activity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"ad_name"</span>) { <span class="hljs-comment">// tên quảng cáo</span>
+    <span class="hljs-comment">//thực thi lệnh sau khi quảng cáo đã đóng</span>
+}
+</div></code></pre>
+<ul>
+<li>Hiển thị <code>Activity</code> tải quảng cáo và sau khi tải xong thì tự động hiển thị quảng cáo và thực hiện
+công việc sau đó. (ví dụ: Mở một <code>Activity</code> mới)</li>
+</ul>
+<pre class="hljs"><code><div>loadAndShowAdOpenActivity(Activity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"ad_name"</span>) {<span class="hljs-comment">// tên quảng cáo</span>
+    <span class="hljs-comment">//thực thi lệnh sau khi quảng cáo đã đóng</span>
+}
+</div></code></pre>
+<ul>
+<li>Hiển thị quanrg cáo Interstitial, tải quảng cáo và sau khi tải xong thì tự động hiển thị quảng cáo
+và thực hiện công việc sau đó. (ví dụ: Trên <code>Activity</code> thực hiện một hành động nào đó)</li>
+</ul>
+<pre class="hljs"><code><div>loadAndShowAdInterstitial(Activity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"ad_name"</span>) {<span class="hljs-comment">// tên quảng cáo</span>
+    <span class="hljs-comment">//thực thi lệnh sau khi quảng cáo đã đóng</span>
+}
+</div></code></pre>
+<ul>
+<li>Hiển thị Dialog tải quảng cáo, sử dụng để chờ tải quảng cáo về và sử dụng</li>
+</ul>
+<pre class="hljs"><code><div>showDialogAdLoading(
+    Activity.<span class="hljs-keyword">this</span>,
+        <span class="hljs-string">"adName"</span>, <span class="hljs-comment">//Tên quảng cáo</span>
+    ) { isCanShow, <span class="hljs-comment">// Quảng cáo có thể sử dụng được không</span>
+        myAd <span class="hljs-comment">// Quảng cáo đã tải về</span>
+        -&gt; run {
+            <span class="hljs-comment">// thực hiện lệnh sau khi đã tải quảng cáo về</span>
+        }
+    }
+</div></code></pre>
+<ul>
+<li>Bật/tắt quảng cáo chèn giữa có thể hiện hoặc không hiện lên một màn hình: (lưu ý sau khi set
+là <code>False</code> thì bạn nhớ set lại là <code>True</code> sau đó để quảng cáo có thể tiếp tục hiện)</li>
+</ul>
+<pre class="hljs"><code><div>setCanShowAd(<span class="hljs-literal">true</span>/<span class="hljs-literal">false</span>)
+</div></code></pre>
+<h2 id="iv-qu%E1%BA%A3ng-c%C3%A1o-m%C3%A0n-h%C3%ACnh-introtutorial-v%C3%A0-c%E1%BA%A5u-h%C3%ACnh-c%C3%A0i-%C4%91%E1%BA%B7t">IV, Quảng cáo màn hình Intro/Tutorial và Cấu hình cài đặt</h2>
+<p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>
+<p>Gói sử dụng <code>app.module.activities</code></p>
+<blockquote>
+<p>Bạn nên tải trước quảng cáo vì các phương thức này chỉ hiển thị quảng cáo khi quảng cáo đã được tải sẵn
+Phương thức showDialogAdLoading() hỗ trợ hiện dialog tải quảng cáo và callback về trạng thái của quảng cáo</p>
+</blockquote>
+<ul>
+<li>
+<p>Hiển thị màn hình Intro/Tutorial thông qua đối tượng<code>IntroPager</code>:</p>
+</li>
+<li>
+<p>Màn hình được khỏi tạo thông qua 2 phương thức <code>showIntroFromPages()</code>, <code>showIntroFromViews()</code> sử
+dụng với các mục đích khác nhau.</p>
+</li>
+</ul>
+<h5 id="1-showintrofrompages-s%E1%BB%AD-d%E1%BB%A5ng-c%C3%A1c-intropager-%C4%91%E1%BB%83-thi%E1%BA%BFt-l%E1%BA%ADp-c%C3%A1c-d%E1%BB%AF-li%E1%BB%87u-cho-c%C3%A1c-page">1. <code>showIntroFromPages()</code> sử dụng các <code>IntroPager</code> để thiết lập các dữ liệu cho các <code>Page</code></h5>
+<pre class="hljs"><code><div><span class="hljs-comment">// Cho phép khởi tạo bằng các đối tượng `IntroPager`</span>
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">showIntroFromPages</span><span class="hljs-params">(
+          context: <span class="hljs-type">Context</span>,
+          showType: <span class="hljs-type">ShowType</span>, <span class="hljs-comment">//tủy chọn hiển thị một lần hoặc nhiều lần</span>
+          ad_name: <span class="hljs-type">String</span>,<span class="hljs-comment">// tên vị trí quảng cáo</span>
+          adOn: <span class="hljs-type">AdOn</span>,<span class="hljs-comment">// Vị trí quảng cáo được sử dụng trong màn hình</span>
+          backgroundDrawable: <span class="hljs-type">Int</span>, <span class="hljs-comment">// background của màn hình</span>
+          <span class="hljs-keyword">vararg</span> introPager: <span class="hljs-type">IntroPager</span>, <span class="hljs-comment">// các IntroPager</span>
+          runAfterDone: () -&gt; <span class="hljs-type">Unit</span> <span class="hljs-comment">//callback được gọi lại khi kết thúc màn</span>
+      )</span></span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ShowType</span> </span>{
+    Once, Multi
+}
+
+<span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AdOn</span> </span>{
+    Top, Bottom
+}
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntroPager</span></span>(
+    <span class="hljs-keyword">var</span> isAnim: <span class="hljs-built_in">Boolean</span>, <span class="hljs-comment">// true là sử dụng animation thông qua file .json false là sử dụng thông qua ảnh từ drawable</span>
+    <span class="hljs-keyword">var</span> image: <span class="hljs-built_in">Int</span>,<span class="hljs-comment">// true: R.raw.anim_tut_01 or false:  R.drawable.im_tut_1</span>
+    <span class="hljs-keyword">var</span> title: String, <span class="hljs-comment">// title</span>
+    <span class="hljs-keyword">var</span> titleColor: <span class="hljs-built_in">Int</span>, <span class="hljs-comment">// Màu của Title , ex: R.color.colorTitle</span>
+    <span class="hljs-keyword">var</span> body: String, <span class="hljs-comment">// Mô tả</span>
+    <span class="hljs-keyword">var</span> bodyColor: <span class="hljs-built_in">Int</span> <span class="hljs-comment">// Màu của mô tả, ex: R.color.colorBody</span>
+)
+</div></code></pre>
+<ul>
+<li>Ví dụ <code>showIntroFromPages()</code>:</li>
+</ul>
+<pre class="hljs"><code><div> IntroActivity.showIntroFromPages(
+                    context,
+                    ShowType.Once,
+                    <span class="hljs-string">"intro_native"</span>,
+                    <span class="hljs-keyword">if</span> (getDataBoolean(<span class="hljs-string">"ad_on_intro_on_top"</span>, <span class="hljs-literal">false</span>)) AdOn.Top <span class="hljs-keyword">else</span> AdOn.Bottom,
+                    R.drawable.bg_tut,
+                    IntroPager(
+                        <span class="hljs-literal">false</span>,
+                        R.drawable.im_tut_1,
+                        context.resources.getString(R.string.title_tut_1),
+                        R.color.colorTu1,
+                        context.resources.getString(R.string.body_tut_1),
+                        R.color.colorBody1
+                    ),
+                    IntroPager(
+                        <span class="hljs-literal">false</span>,
+                        R.drawable.im_tut_2,
+                        context.resources.getString(R.string.title_tut_2),
+                        R.color.colorTut2,
+                        context.resources.getString(R.string.body_tut_2),
+                        R.color.colorBody2
+                    ),
+                    IntroPager(
+                        <span class="hljs-literal">false</span>,
+                        R.drawable.im_tut_3,
+                        context.resources.getString(R.string.title_tut_3),
+                        R.color.colorTut3,
+                        context.resources.getString(R.string.body_tut_3),
+                        R.color.colorBody3
+                    )
+                ) {
+                    <span class="hljs-comment">// Sau khi kết thúc màn Intro/Tutorial thì Callback sẽ được gọi</span>
+                }
+
+</div></code></pre>
+<h5 id="2-showintrofromviews-s%E1%BB%AD-d%E1%BB%A5ng-c%C3%A1c-view-%C4%91%E1%BB%83-thi%E1%BA%BFt-l%E1%BA%ADp-c%C3%A1c-d%E1%BB%AF-li%E1%BB%87u-page">2. <code>showIntroFromViews()</code> sử dụng các <code>View</code> để thiết lập các dữ liệu <code>Page</code></h5>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ShowType</span> </span>{
+    Once, Multi
+}
+
+<span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AdOn</span> </span>{
+    Top, Bottom
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">showIntroFromViews</span><span class="hljs-params">(
+    context: <span class="hljs-type">Context</span>,
+    showType: <span class="hljs-type">ShowType</span>, <span class="hljs-comment">//tủy chọn hiển thị một lần hoặc nhiều lần</span>
+    ad_name: <span class="hljs-type">String</span>,<span class="hljs-comment">// tên vị trí quảng cáo</span>
+    adOn: <span class="hljs-type">AdOn</span>,<span class="hljs-comment">// Vị trí quảng cáo được sử dụng trong màn hình</span>
+    backgroundDrawable: <span class="hljs-type">Int</span>, <span class="hljs-comment">// background của màn hình</span>
+    <span class="hljs-keyword">vararg</span> view: <span class="hljs-type">View</span>, <span class="hljs-comment">// Các View của mỗi Page</span>
+    runAfterDone: () -&gt; <span class="hljs-type">Unit</span>
+)</span></span> {
+
+}
+</div></code></pre>
+<ul>
+<li>Ví dụ <code>showIntroFromViews</code>:</li>
+</ul>
+<pre class="hljs"><code><div>
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getImageView</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>, resId: <span class="hljs-type">Int</span>)</span></span>: ImageView {
+          <span class="hljs-keyword">var</span> imv: ImageView = ImageView(context)
+          imv.setImageResource(resId)
+          imv.scaleType = ImageView.ScaleType.CENTER_INSIDE
+          <span class="hljs-keyword">return</span> imv
+}
+
+IntroActivity.showIntroFromViews(
+    context,
+    ShowType.Once,
+    <span class="hljs-string">"intro_native"</span>,
+    <span class="hljs-keyword">if</span> (getDataBoolean(<span class="hljs-string">"ad_on_intro_on_top"</span>, <span class="hljs-literal">false</span>)) AdOn.Top <span class="hljs-keyword">else</span> AdOn.Bottom,
+    R.drawable.bg_tut,
+    getImageView(context, R.drawable.im_tut_1),
+    getImageView(context, R.drawable.im_tut_2),
+    getImageView(context, R.drawable.im_tut_3)
+) {
+  <span class="hljs-comment">// Sau khi kết thúc màn Intro/Tutorial thì Callback sẽ được gọi</span>
+}
+</div></code></pre>
+<h2 id="v-c%C3%A1c-ti%E1%BB%87n-%C3%ADch-kh%C3%A1c">V, Các tiện ích khác</h2>
+<p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>
+<ul>
+<li><code>MyFile</code> các phương thức tiện ích sử dụng với File trong gói <code>app.module.utils</code></li>
+</ul>
+<pre class="hljs"><code><div> MyFile....
+</div></code></pre>
+<ul>
+<li><code>MyConnection</code> các phương thức tiện ích sử dụng với HTTP trong gói <code>app.module.utils</code></li>
+</ul>
+<pre class="hljs"><code><div> MyConnection....
+</div></code></pre>
+<ul>
+<li><code>MyCache</code> Tiện ich Shared Preferences trong gói <code>app.module.utils</code></li>
+</ul>
+<pre class="hljs"><code><div>    MyCache.get...
+    MyCache.put...
+</div></code></pre>
+<ul>
+<li>Lấy tên phiên bản và mã phiên bản:</li>
+</ul>
+<pre class="hljs"><code><div>app.module.utils.getAppVersionName(<span class="hljs-keyword">this</span>) <span class="hljs-comment">// tên phiên bản</span>
+
+app.module.utils.getAppVersionCode(<span class="hljs-keyword">this</span>) <span class="hljs-comment">// mã phiên bản</span>
+</div></code></pre>
+<ul>
+<li>Hiển thị Dialog xin Rate và Feedback từ lần thứ 2 vào lại App</li>
+</ul>
+<pre class="hljs"><code><div>askRateAndFeedbackNextSession(Activity.<span class="hljs-keyword">this</span>) { <span class="hljs-comment">// hiển thị dialog xin rate từ lần thứ 2 vào app</span>
+    <span class="hljs-comment">// được gọi sau khi dialog xin rate tắt</span>
+}
+</div></code></pre>
+<ul>
+<li>Hiển thị hỏi Dialog xin Rate và Reivew</li>
+</ul>
+<pre class="hljs"><code><div>showDialogRateAndFeedback(<span class="hljs-keyword">this</span><span class="hljs-symbol">@VaultActivity</span>) {
+<span class="hljs-comment">// được gọi sau khi dialog xin rate tắt</span>
+}
+</div></code></pre>
+<ul>
+<li>Mở màn hình Policy</li>
+</ul>
+<pre class="hljs"><code><div>openPolicyScreen(Activity.<span class="hljs-keyword">this</span>,<span class="hljs-string">"policy.html"</span>)<span class="hljs-comment">// tên file ở Assets</span>
+
+</div></code></pre>
+<ul>
+<li>Hiển thị Dialog xóa quảng cáo</li>
+</ul>
+<pre class="hljs"><code><div>showDialogRemoveAd(Activity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"remove_ad,...,..."</span>, ,MainActivity::<span class="hljs-class"><span class="hljs-keyword">class</span>.<span class="hljs-title">java</span>) // <span class="hljs-title">t</span>ê<span class="hljs-title">n</span> <span class="hljs-title">c</span>ủ<span class="hljs-title">a</span> <span class="hljs-title">m</span>à<span class="hljs-title">n</span> <span class="hljs-title">h</span>ì<span class="hljs-title">nh</span> <span class="hljs-title">Activity</span> đượ<span class="hljs-title">c</span> <span class="hljs-title">m</span>ở <span class="hljs-title">sau</span> <span class="hljs-title">m</span>à<span class="hljs-title">n</span> <span class="hljs-title">Splash</span>, <span class="hljs-type">remove_ad là các mã id product cách nhau bằng `</span>,<span class="hljs-type">`</span></span>
+</div></code></pre>
+<ul>
+<li>Hiển thị Dialog xin Feedback</li>
+</ul>
+<pre class="hljs"><code><div>showDialogFeedback(Activity.<span class="hljs-keyword">this</span>) {  }
+</div></code></pre>
+<ul>
+<li>Hiển thị Dialog kiểm tra bản cập nhật App trên Google Play</li>
+</ul>
+<pre class="hljs"><code><div>showDialogCheckAppOnGooglePlay(Activity.<span class="hljs-keyword">this</span>)
+</div></code></pre>
+<ul>
+<li>Kiểm tra User đã xóa quảng cáo hay chưa</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (isPayRemoveAd(Activity.<span class="hljs-keyword">this</span>)) <span class="hljs-comment">// true là đã xóa và ngược lại</span>
+activityAboutBinding.icGoogleByeAd.visibility =
+    View.GONE
+
+</div></code></pre>
+<ul>
+<li>Kiểm tra sẽ hiển thị màn cài đặt ngôn ngữ:</li>
+</ul>
+<pre class="hljs"><code><div>isWillShowLanguageSetup(activity) <span class="hljs-comment">// true nếu màn cài ngôn ngữ chưa hiển thị lần nào, false là đã cài ngôn ngữ</span>
+</div></code></pre>
+<ul>
+<li>Kiểm tra và mở màn hình chọn cài Language lần đầu tiên:</li>
+</ul>
+<blockquote>
+<p>Bạn nên tải trước quảng cáo vì phương thức này chỉ hiển thị quảng cáo khi quảng cáo đã được tải sẵn
+Phương thức showDialogAdLoading() hỗ trợ hiện dialog tải quảng cáo và callback về trạng thái của quảng cáo</p>
+</blockquote>
+<pre class="hljs"><code><div>
+
+askSetupLanguage(Activity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"bottom_language"</span>){
+<span class="hljs-comment">// Thực hiện lệnh tiếp theo nếu đã kiểm tra cài đặt ngôn ngữ hoặc ngôn ngữ đã được cài xong</span>
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// Mẫu cài đặt tải và hiển thị màn cài đặt ngôn ngữ</span>
+<span class="hljs-keyword">if</span> (isWillShowLanguageSetup(<span class="hljs-keyword">this</span>)) {
+      showDialogAdLoading(<span class="hljs-keyword">this</span>, <span class="hljs-string">"tên quảng cáo"</span>) { isCanShow, myAd -&gt;
+          <span class="hljs-keyword">if</span> (isCanShow) askSetupLanguage(<span class="hljs-keyword">this</span>, <span class="hljs-string">"tên quảng cáo màn"</span>) {
+              goToMain()
+          } <span class="hljs-keyword">else</span>
+              goToMain()
+      }
+  } <span class="hljs-keyword">else</span>
+      goToMain()
+
+
+</div></code></pre>
+<ul>
+<li>Mở màn hinh cài đặt ngôn ngữ</li>
+</ul>
+<pre class="hljs"><code><div>openSetLangActivity(Activity.<span class="hljs-keyword">this</span>,<span class="hljs-string">"&lt;tên vị trí quảng cáo&gt;"</span>, &lt;màn_home&gt;::<span class="hljs-class"><span class="hljs-keyword">class</span>.<span class="hljs-title">java</span>) // <span class="hljs-title">n</span>ế<span class="hljs-title">u</span> <span class="hljs-title">c</span>à<span class="hljs-title">i</span> đặ<span class="hljs-title">t</span> <span class="hljs-title">ng</span>ô<span class="hljs-title">n</span> <span class="hljs-title">ng</span>ữ <span class="hljs-title">c</span>ầ<span class="hljs-title">n</span> <span class="hljs-title">ph</span>ả<span class="hljs-title">i</span> <span class="hljs-title">restart</span> <span class="hljs-title">l</span>ạ<span class="hljs-title">i</span> <span class="hljs-title">app</span> <span class="hljs-title">b</span>ằ<span class="hljs-title">ng</span> <span class="hljs-title">c</span>á<span class="hljs-title">ch</span> <span class="hljs-title">m</span>ở <span class="hljs-title">m</span>à<span class="hljs-title">n</span> <span class="hljs-title">home</span></span>
+</div></code></pre>
+<ul>
+<li>Thêm Icon vào giao diện để mở màn hình More App</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">com.airbnb.lottie.LottieAnimationView</span>
+    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/ic_cross"</span>
+    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"?actionBarSize"</span>
+    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"?actionBarSize"</span>
+    <span class="hljs-attr">app:layout_constraintEnd_toEndOf</span>=<span class="hljs-string">"parent"</span>
+    <span class="hljs-attr">app:layout_constraintStart_toStartOf</span>=<span class="hljs-string">"parent"</span>
+    <span class="hljs-attr">app:layout_constraintTop_toTopOf</span>=<span class="hljs-string">"parent"</span>
+    <span class="hljs-attr">app:lottie_autoPlay</span>=<span class="hljs-string">"true"</span>
+    <span class="hljs-attr">app:lottie_loop</span>=<span class="hljs-string">"true"</span>
+    <span class="hljs-attr">app:lottie_rawRes</span>=<span class="hljs-string">"@raw/anim_store_cross"</span> /&gt;</span>
+</div></code></pre>
+<ul>
+<li>Cú pháp mở màn hình More App</li>
+</ul>
+<pre class="hljs"><code><div>openMoreAppActivity(Activity.<span class="hljs-keyword">this</span>)
+</div></code></pre>
+<ul>
+<li>Cú pháp mở màn hình quảng cáo thoát App</li>
+</ul>
+<pre class="hljs"><code><div>askExitApp(Activity.<span class="hljs-keyword">this</span>,<span class="hljs-string">"exit_app"</span>)
+</div></code></pre>
+<ul>
+<li>Theo dõi các sự kiện thông qua <code>Firebase</code></li>
+</ul>
+<p><a href="https://firebase.google.com/docs/analytics/events?platform=android">Chi tiết LogEvent</a></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// đơn giản để track một sự kiện</span>
+firebaseEventTracking(Activity.<span class="hljs-keyword">this</span>,event =<span class="hljs-string">"home_click_button"</span>)
+<span class="hljs-comment">// nếu cần thêm các tham số kèm theo</span>
+firebaseEventTracking(Activity.<span class="hljs-keyword">this</span>,event =<span class="hljs-string">"home_click_button"</span> ,Pair(<span class="hljs-string">"arg1"</span>,<span class="hljs-string">""</span>), Pair(<span class="hljs-string">"agr2"</span>,<span class="hljs-number">1</span>))
+</div></code></pre>
+<ul>
+<li>Bật/Tắt chế độ DebugView để kiểm tra lại việc gắn các sự kiện:</li>
+</ul>
+<pre class="hljs"><code><div>// Bật
+adb shell setprop debug.firebase.analytics.app PACKAGE_NAME
+
+// Tắt
+adb shell setprop debug.firebase.analytics.app .none.
+
+</div></code></pre>
+<p><a href="https://firebase.google.com/docs/analytics/debugview#android">Chi tiết hơn về DebugVew</a></p>
+<ul>
+<li>Theo dõi các màn hình thông qua <code>Firebase</code></li>
+</ul>
+<pre class="hljs"><code><div>firebaseScreenTracking(Activity.<span class="hljs-keyword">this</span>, screen_name, screen_class)
+</div></code></pre>
+<p><a href="https://firebase.google.com/docs/analytics/screenviews">Chi tiết Measure screenviews</a></p>
+<ul>
+<li><code>Logger</code> giúp log các thông tin lên server nếu cần thêm dữ liệu từ phía <code>User</code>:</li>
+</ul>
+<p>Trong gói <code>app.module.utils</code></p>
+<p>Sự dụng để có thể lấy thêm dữ liệu từ <code>User</code> và lưu chúng lên server mysql ở bảng <code>logger</code> theo
+dạng <code>key:value</code> để với <code>key</code> là dạng string và <code>value</code> thì hỗ trợ các định dạng khác nhau</p>
+<pre class="hljs"><code><div>
+logString(key, value) <span class="hljs-comment">// log lên đoạn văn bản, với value có thể là string hoặc json string</span>
+logLong(key, value) <span class="hljs-comment">// log giá trị `long`</span>
+logDouble(key, value) <span class="hljs-comment">// log giá trị `double`</span>
+logData(key, string_value, long_value, double_value) <span class="hljs-comment">//nếu log chứa nhiều giá trị khác nhau</span>
+</div></code></pre>
+<p>Các <code>log</code> sẽ tự động lấy thêm thông tin kèm các thông tin từ các phương thức trên:</p>
+<blockquote>
+<p><code>uid</code> : mã định định danh của user</p>
+</blockquote>
+<blockquote>
+<p><code>from</code> : package app tên của gói</p>
+</blockquote>
+<blockquote>
+<p><code>version</code> : phiên bản của ứng dựng định dạng <code>version_code</code> (<code>version_name</code>)</p>
+</blockquote>
+<ul>
+<li>Lấy thông tin về Quốc Gia thông qua địa chỉ IP của <code>User</code></li>
+</ul>
+<pre class="hljs"><code><div>    getGeoIP {
+it <span class="hljs-comment">// là đối tượng  GeoIP</span>
+        }
+</div></code></pre>
+<pre class="hljs"><code><div>GeoIP(
+    <span class="hljs-keyword">var</span> country_code: String = <span class="hljs-string">"-"</span>,
+    <span class="hljs-keyword">var</span> country_name: String = <span class="hljs-string">"-"</span>,
+    <span class="hljs-keyword">var</span> city: String = <span class="hljs-string">"-"</span>,
+    <span class="hljs-keyword">var</span> postal: String = <span class="hljs-string">"-"</span>,
+    <span class="hljs-keyword">var</span> latitude: String = <span class="hljs-string">"-"</span>,
+    <span class="hljs-keyword">var</span> longitude: String = <span class="hljs-string">"-"</span>,
+    <span class="hljs-keyword">var</span> IPv4: String = <span class="hljs-string">"-"</span>,
+    <span class="hljs-keyword">var</span> state: String = <span class="hljs-string">"-"</span>
+)
+</div></code></pre>
+<ul>
+<li>Lấy <code>UserID</code>: trả về id của user</li>
+</ul>
+<pre class="hljs"><code><div>getUserID(context)
+</div></code></pre>
+<ul>
+<li>Tải một File băng URL</li>
+</ul>
+<pre class="hljs"><code><div>
+downloadFile(
+   <span class="hljs-string">"rl,
+    file_out
+) { b -&gt; elog(b, "</span>-----------------<span class="hljs-string">") }
+
+</span></div></code></pre>
+<h2 id="vi-h%E1%BB%87-th%E1%BB%91ng-c%E1%BA%A5u-h%C3%ACnh-d%E1%BB%AF-li%E1%BB%87u-trong-app">VI, Hệ thống cấu hình dữ liệu trong App</h2>
+<p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>
+<ul>
+<li>
+<p>Các thông tin cấu hình được lưu định dạng <code>json</code> và được lấy từ <code>Remote Configs</code> với key
+là <code>data_configs</code> hoặc là từ tập tin trong thư mục <code>assets</code> có tên tệp <code>data.json</code></p>
+</li>
+<li>
+<p>Tệp <code>ads.json</code> có dạng</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>[
+  {
+    <span class="hljs-attr">"ad_id"</span>: <span class="hljs-string">"ca-app-pub-8474106102524491/8458557130"</span>,
+    <span class="hljs-attr">"ad_name"</span>: <span class="hljs-string">"splash"</span>,
+    <span class="hljs-attr">"ad_network"</span>: <span class="hljs-string">"admob"</span>,
+    <span class="hljs-attr">"ad_format"</span>: <span class="hljs-string">"interstitial"</span>,
+    <span class="hljs-attr">"ad_enable"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"ad_index"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"ad_ctr"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-attr">"ad_impressions"</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">"ad_distance"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-attr">"ad_timeout"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-attr">"ad_tag"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"ad_version"</span>: <span class="hljs-string">"default"</span>,
+    <span class="hljs-attr">"app_version_name"</span>: <span class="hljs-string">"1.0.1"</span>,
+    <span class="hljs-attr">"app_id"</span>: <span class="hljs-string">"com.taymay.haircut"</span>,
+    <span class="hljs-attr">"ad_update"</span>: <span class="hljs-string">"3/26/2022 5:05:21"</span>,
+    <span class="hljs-attr">"ad_reload"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"ad_mediation"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"ad_note"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"open_bid"</span>: <span class="hljs-string">""</span>
+  },
+  ...
+]
+
+</div></code></pre>
+<ul>
+<li>Tệp <code>data.json</code> có dạng</li>
+</ul>
+<pre class="hljs"><code><div>[
+  {
+    <span class="hljs-attr">"app_id"</span>: &lt;str&gt;,
+    <span class="hljs-attr">"bool_value"</span>: &lt;bool&gt;,
+    <span class="hljs-attr">"data_version"</span>: &lt;str&gt;,
+    <span class="hljs-attr">"double_value"</span>: &lt;double&gt;,
+    <span class="hljs-attr">"key"</span>: &lt;str&gt;,
+    <span class="hljs-attr">"long_value"</span>: &lt;long&gt;,
+    <span class="hljs-attr">"string_value"</span>: &lt;str&gt;
+  },
+    ...
+]
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">data</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataConfig</span></span>(
+    <span class="hljs-keyword">var</span> app_id: String = <span class="hljs-string">""</span>,
+    <span class="hljs-keyword">var</span> bool_value: <span class="hljs-built_in">Boolean</span> = <span class="hljs-literal">false</span>,
+    <span class="hljs-keyword">var</span> key: String = <span class="hljs-string">""</span>,
+    <span class="hljs-keyword">var</span> data_version: String = <span class="hljs-string">""</span>,
+    <span class="hljs-keyword">var</span> double_value: <span class="hljs-built_in">Double</span> = <span class="hljs-number">0.0</span>,
+    <span class="hljs-keyword">var</span> long_value: <span class="hljs-built_in">Long</span> = <span class="hljs-number">0</span>,
+    <span class="hljs-keyword">var</span> string_value: String = <span class="hljs-string">""</span>
+)
+</div></code></pre>
+<ul>
+<li>
+<p>Đối tượng <code>DataConfig</code> để cấu hình các loại dữ liệu khác nhau như <code>String</code>, <code>Boolean</code>
+, <code>Double</code> <code>Long</code> với các <code>key</code> khác nhau và được cấu hình dự trên các <code>data_version</code> để tiện
+trong quá trình AB Test các tính năng trong App</p>
+</li>
+<li>
+<p>Các phương thức sử dụng</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>
+<span class="hljs-comment">// lấy giá trị String từ 1 key</span>
+<span class="hljs-keyword">var</span> dataString = getDataString(<span class="hljs-string">"&lt;tên key&gt;"</span>, <span class="hljs-string">"&lt;giá trị mặc định&gt;"</span>)
+
+<span class="hljs-comment">// lấy giá trị Boolean từ 1 key</span>
+<span class="hljs-keyword">var</span> dataBoolean = getDataBoolean(<span class="hljs-string">"&lt;tên key&gt;"</span>, &lt;giá trị mặc định&gt;)
+
+<span class="hljs-comment">// lấy giá trị Double từ 1 key</span>
+<span class="hljs-keyword">var</span> dataDouble = getDataDouble(<span class="hljs-string">"&lt;tên key&gt;"</span>, &lt;giá trị mặc định&gt;)
+
+<span class="hljs-comment">// lấy giá trị Long từ 1 key</span>
+<span class="hljs-keyword">var</span> dataLong = getDataLong(<span class="hljs-string">"&lt;tên key&gt;"</span>, &lt;giá trị mặc định&gt;)
+
+</div></code></pre>
+<ul>
+<li>
+<p>Hệ thống sẽ tùy chỉnh các <code>data_version</code> tự động trên server tuy nhiên khi <code>Debug</code> thì có thể tùy
+chỉnh lựa chọn các phiên bản để cho việc kiểm thử</p>
+<ul>
+<li>Đối với <code>Data Configs</code> sử dụng thuộc tính <code>DATA_CONFIG_VERSION_DEFAULT</code> để thay
+đổi <code>data_version</code> cho phiên bản chạy. (Mặc định bản <code>release</code> sẽ tự động lấy các giá trị sẽ
+đổi thành <code>default</code>)</li>
+<li>Đối với <code>Ads Configs</code> sử dụng thuộc tính <code>AD_CONFIG_VERSION_DEFAULT</code> để thay đổi <code>ad_version</code>
+cho phiên bản chạy. (Mặc định bản <code>release</code> sẽ tự động lấy các giá trị sẽ đổi thành <code>default</code>)</li>
+</ul>
+</li>
+<li>
+<p>Ví dụ muốn test data 2 phiên bản <code>default</code> và <code>A</code> bạn có thể thay đổi để test phiên bản với dữ
+liệu cấu hình phiên bản <code>A</code>:</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>DATA_CONFIG_VERSION_DEFAULT=<span class="hljs-string">"A"</span>
+</div></code></pre>
+<ul>
+<li>Tương tự như <code>Ads Configs</code>:</li>
+</ul>
+<pre class="hljs"><code><div>AD_CONFIG_VERSION_DEFAULT=<span class="hljs-string">"A"</span>
+</div></code></pre>
+<p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>
+<h2 id="vii-h%E1%BB%87-th%E1%BB%91ng-in-app-purchase-thanh-to%C3%A1n-trong-app">VII, Hệ thống In App Purchase (Thanh toán trong App)</h2>
+<ul>
+<li>
+<p>Lưu ý mặc định các App đều phải có giá trị <code>iap</code> đã cấu hình trong <code>Data Configs</code> để sử dụng được
+tính năng <code>IAP</code>.</p>
+</li>
+<li>
+<p>Sử dụng <code>Data Configs</code> để cấu hình iap với <code>key</code> là <code>iap</code> và cú pháp của giá trị
+là <code>&quot;id_product_a,id_product_b,id_product_c,....&quot;</code>, mỗi giá trị phân tách nhau bằng dấu <code>,</code> hỗ trợ
+cấu hình nhiều <code>product_id</code> khác nhau để hỗ trợ trong việc AB Test Giá, mặc định sẽ
+chọn <code>product_id</code> đầu tiên.</p>
+</li>
+</ul>
+<p id="bottom"/>
+
+</body>
+</html>

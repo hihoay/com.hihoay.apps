@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#AEAEAE</item>
+        <item name="colorControlActivated">#FFC107</item>
+    </style>
+
+
+    <style name="noAnimTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+</resources>

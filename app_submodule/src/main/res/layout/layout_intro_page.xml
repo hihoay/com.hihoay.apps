@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_24sdp" />
+
+
+    <ImageView
+        android:id="@+id/imvTut"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:scaleType="centerInside" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lt_animation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="sans-serif-medium"
+        android:lineSpacingExtra="4.8sp"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:textSize="@dimen/_19sdp"
+        android:textStyle="normal"
+        tools:text="Share Your Location" />
+
+    <TextView
+        android:id="@+id/tv_body"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="sans-serif"
+        android:lineSpacingExtra="3.4sp"
+        android:lines="4"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="normal"
+        tools:text="Easily share your location with friends and family" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_70sdp" />
+
+</LinearLayout>

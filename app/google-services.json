@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "205635738854",
+    "project_id": "taymay-chatbot",
+    "storage_bucket": "taymay-chatbot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205635738854:android:af1bcf60166120e5372f27",
+        "android_client_info": {
+          "package_name": "com.taymay.chatbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "205635738854-hlc7ter9i4a9nlikef7mqkhrp66cut1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjpkM9dOV4uH3RwPhiEyYOPAsGDNS2H-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "205635738854-hlc7ter9i4a9nlikef7mqkhrp66cut1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

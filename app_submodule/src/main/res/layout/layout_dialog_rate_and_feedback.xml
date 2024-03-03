@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_my_dialog_rate"
+        tools:ignore="MissingDefaultResource">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/view_rate_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTitleFeedback"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/how_was_your_nexperience_with_us"
+                        android:textColor="#000" />
+
+                    <ImageView
+                        android:id="@+id/imv_emoji_selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_emoji_1" />
+
+                    <TextView
+                        android:id="@+id/tv_emoji_selected"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:gravity="center"
+                        android:text="@string/good"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:id="@+id/view_rate_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/rate_1"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:src="@drawable/ic_emoji_gray_1"
+                            android:tag="1" />
+
+                        <ImageView
+                            android:id="@+id/rate_2"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:src="@drawable/ic_emoji_gray_2"
+                            android:tag="2" />
+
+                        <ImageView
+                            android:id="@+id/rate_3"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:src="@drawable/ic_emoji_gray_3"
+                            android:tag="3" />
+
+                        <ImageView
+                            android:id="@+id/rate_4"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:padding="@dimen/_3sdp"
+
+                            android:src="@drawable/ic_emoji_gray_4"
+                            android:tag="4" />
+
+                        <ImageView
+                            android:id="@+id/rate_5"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:src="@drawable/ic_emoji_gray_5"
+                            android:tag="5" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_feedback"
+                        style="@style/TextAppearance.AppCompat.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="@drawable/bg_my_edt_feedback"
+                        android:gravity="top|left"
+                        android:hint="@string/hint_my_txt_feedback"
+                        android:lines="3"
+                        android:padding="@dimen/_8sdp"
+                        android:textColor="#676767"
+                        android:textColorHint="#676767" />
+
+                    <TextView
+                        android:id="@+id/tv_rate_submit"
+                        style="@style/TextAppearance.AppCompat.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/bg_my_btn_submit_feedback"
+                        android:gravity="center"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/submit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhile" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/view_thanks_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/thanks_for_making_nall_this_better"
+                        android:textColor="#000" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/animationView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/anim_feedback_complete" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+</layout>
