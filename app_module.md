@@ -23,7 +23,8 @@
 
 1. Thêm vô `build.gradle`:
 
-- Phiên bản: [![](https://jitpack.io/v/com.github.hihoay/com.hihoay.apps.svg)](https://jitpack.io/private#hihoay/com.hihoay.apps)
+
+- Phiên bản: [![](https://jitpack.io/v/com.github.hihoay/com.hihoay.apps.svg)](https://jitpack.io/hihoay/com.hihoay.apps)
 
 ```kotlin
   implementation 'com.github.hihoay:com.hihoay.apps:<version_name>'
