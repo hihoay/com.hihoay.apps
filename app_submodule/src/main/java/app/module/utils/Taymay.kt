@@ -779,6 +779,10 @@ fun taymayLoadAdShowCallback(
 
 }
 
+fun taymayIsAdLoaded(adName: String): Boolean {
+    return isAdLoaded(adName)
+}
+
 fun taymayInitReturnAppAd(context: Context, nameOpenAd: String) {
     TaymayContext = context
     if (OPEN_AD_INITED) return

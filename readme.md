@@ -1,6 +1,6 @@
 <p id="top"/>
 
-# Module cho Android - Taymay.io
+# Module cho Android - Hihoay.io
 
 <img src="https://play-lh.googleusercontent.com/kYGVCEZebP5uG0oJeC6u7KJJj3WhYBBqv-k4o4gxHxZO_oHSM2AIlaPDpZEg2FkSfj8" width=10% height=10%>
 </img>
@@ -23,33 +23,25 @@
 
 1. Thêm vô `build.gradle`:
 
-- Phiên
-  bản: [![](https://jitpack.io/v/com.gitlab.taymay/com.taymay.app.module.svg)](https://jitpack.io/#com.gitlab.taymay/com.taymay.app.module)
+- Phiên bản: [![](https://jitpack.io/v/com.github.hihoay/com.hihoay.apps.svg)](https://jitpack.io/private#hihoay/com.hihoay.apps)
 
 ```kotlin
-implementation 'com.gitlab.taymay:com.taymay.app.module:<version_name>'
+  implementation 'com.github.hihoay:com.hihoay.apps:<version_name>'
 ```
 
 2. Thêm vô `settings.gradle`:
 
 ```groovy
-  repositories {
-    mavenCentral()
-        gradlePluginPortal()
-        maven { url 'https://jitpack.io' }
+ dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        ...
         maven {
-            url 'https://artifact.bytedance.com/repository/pangle/'
+            url "https://jitpack.io"
+            credentials { username  "jp_9m3ub8bd9bkaudepcup9k83n37"}
         }
-        maven {
-            url 'https://android-sdk.is.com/'
-        }
-        maven {
-            url 'https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea'
-        }
-        maven {
-            url "https://sdk.tapjoy.com/"
-        }
-}
+    }
+ }
 ```
 
 3. Thêm các tệp cấu hình mặc định vào thư mục `assets`:
@@ -83,8 +75,20 @@ thông tin App ID của Admob nếu chưa có (không sẽ bị crash, dưới �
 khi nào có ID thật thì thay thế) (meta-data được thêm ở vị trí trong thẻ `application`)
 
 ```xml
+
+    <!-- Sử dụng ID này để test nếu chưa có: ca-app-pub-3940256099942544~3347511713 -->
+
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
     android:value="<id của app trên Admob>" />
+```
+
+- Thêm vào trong thẻ `application` trong `manifest`
+
+```xml
+  <application
+    ...
+      tools:replace="android:theme">
+  </application>
 ```
 
 5. Gắn Firebase vào App nếu chưa gắn:
@@ -111,25 +115,110 @@ khi nào có ID thật thì thay thế) (meta-data được thêm ở vị trí 
 #### 1, Thêm vào `onCreate()` `Application` _class_
 
 ```kotlin
-taymay(this, "remove_ad,...,...", Mediation(null, null, null), BuildConfig.DEBUG)// để khởi tạo các giá trị , remove_ad là mã xóa quảng cáo
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+//        AD_CONFIG_VERSION_DEFAULT = "test"
+//        DATA_CONFIG_VERSION_DEFAULT = "default"
+        IS_TESTING = BuildConfig.DEBUG
+        HASH_UMP_TEST = "137E352EEFAF0422571EC5990F502A56"
+        taymaySetupApplication(this, "remove_ad,upgrade_01")
+    }
+}
 ```
 
-#### 2, Lấy cấu hình quảng cáo để sử dụng
-
-<span style="color:red;">Lưu ý phần này chỉ gọi 1 lần, thường gọi ở ngay trong `onCreate()` màn Splash. Tránh gọi 2 hoặc nhiều lần sẽ khởi tạo lại cấu hình quảng cáo trong App gây lỗi Treo ở màn hình Splash</span>
+#### 2, Cài đặt màn hình Splash `SplashActivity`:
 
 ```kotlin
 
+class SplashActivity : AppCompatActivity() {
+    private val isCalled = AtomicBoolean(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(taymaySplashViewNoAnim(getString(R.string.app_name),R.mipmap.ic_launcher,layoutInflater).root)
-        taymayGetAdVersion(this) {
-
-        //... Các lệnh của chương trình tiếp theo
-
+        setContentView(
+            taymaySplashViewNoAnim(
+                resources.getString(R.string.app_name), R.raw.ic_splash, layoutInflater
+            ).root
+        )
+        taymayInitUMP(this) { b, consentInformation ->
+            if (isCalled.compareAndSet(false, true)) {
+                initSplash()
+            }
         }
     }
 
+    private fun initSplash() {
+        taymayGetAdVersion(this) { //Tải dữ liệu quảng cáo
+//            if (com.taymay.calculator.vault.BuildConfig.DEBUG) adsConfig.forEach {
+//                it.ad_distance = 3
+//            }
+            taymayLoadAdShowCallback(
+                this, "splash_full", LinearLayout(this)
+            ) { myAd ->
+                when (myAd.adState) {
+                    AdState.Close, AdState.Done, AdState.Timeout, AdState.Error -> adShowDone()
+                    AdState.Show -> setContentView(LinearLayout(this@SplashActivity))
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun adShowDone() {
+        taymayAskFirstSetupLanguage(this, "au:language_top_small", "language_bottom_medium") {
+            showIntro(this, ShowType.Once) {
+                if (it) taymayActivityLoadAndShowAdCallbackFor(
+                    this, "app_intro_skip_full"
+                ) { ad, ac ->
+                    goHomeScreen()
+                }
+                else goHomeScreen()
+            }
+        }
+    }
+
+    private fun goHomeScreen() {
+            startActivity(Intent(this, HomeActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            })
+    }
+
+    companion object {
+
+        fun showIntro(activity: Activity, multi: ShowType, callback: (Boolean) -> Unit) {
+            IntroActivity.taymayShowIntroFromPages(
+                activity, multi, "au:intro_top_small",
+
+                "app_intro_bottom_small", R.drawable.bg_tut, IntroPager(
+                    true,
+                    R.raw.set_pass_anim,
+                    activity.resources.getString(R.string.title_tut_1),
+                    R.color.colorWhile,
+                    activity.resources.getString(R.string.body_tut_1),
+                    R.color.colorWhile
+                ), IntroPager(
+                    true,
+                    R.raw.anim_reset_pass,
+                    activity.resources.getString(R.string.title_tut_2),
+                    R.color.colorWhile,
+                    activity.resources.getString(R.string.body_tut_2),
+                    R.color.colorWhile
+                ),
+                IntroPager(
+                    true,
+                    R.raw.anim_tut_03,
+                    activity.resources.getString(R.string.title_tut_3),
+                    R.color.colorWhile,
+                    activity.resources.getString(R.string.body_tut_3),
+                    R.color.colorWhile
+                )
+            ) {
+                callback(it)
+            }
+        }
+    }
+}
 ```
 
 - Có thể kiểm tra tải được dữ liệu cấu hình quảng cáo thành công hay chưa:
@@ -154,7 +243,7 @@ import app.module.utils.*
 ```kotlin
 // adName: tên quảng cáo
 // adViewContainer: view chứa quảng cáo là LinearLayout
-showAdInView(Activity.this, adName, adViewContainer)
+loadAndShowAdInLayout(Activity.this, adName, adViewContainer)
 ```
 
 - Mẫu khai báo ViewContainer chứa quảng cáo
@@ -166,6 +255,7 @@ showAdInView(Activity.this, adName, adViewContainer)
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="vertical"
+  tools:layout_height="10dp"
 />
 ```
 
@@ -176,7 +266,7 @@ showAdInView(Activity.this, adName, adViewContainer)
 
 ```kotlin
 
-  loadAndShowAdCallback( // tự động tải và hiển thị quảng cáo
+  taymayLoadAdShowCallback( // tự động tải và hiển thị quảng cáo
     Activity.this,
     "open_app", // tên quảng cáo
     LinearLayout(this) // view chứa quảng cáo là LinearLayout
@@ -211,52 +301,63 @@ showAdInView(Activity.this, adName, adViewContainer)
 - Khởi tạo quảng cáo quay trờ lại `App (Open Ad)` sử dụng trong Activity
 
 ```kotlin
-initReturnAppAd(Activity.this,"return_app") // tên quảng cáo
+taymayInitReturnAppAd(Activity.this,"return_app") // tên quảng cáo
 ```
 
 - Kiểm tra xem quảng cáo đã được tải trước chưa:
 
 ```kotlin
-isAdLoaded("ad_name_here")
+taymayIsAdLoaded("ad_name_here")
 ```
 
 - Tải trước quảng cáo
 
 ```kotlin
-loadAdsToCache(Activity.this, "ad_name_1","ad_name_2","ad_name_3",...)
+application.loadAdsToCache( "ad_name_1","ad_name_2","ad_name_3",...)
 ```
 
-- Hiển thị `Activity` tải quảng cáo và sau khi tải xong thì hiện quảng cáo chèn giữa, chuyển màn khi
-  đóng một `Activity` (ví dụ: Đóng `Activity` hiện tại và quay lại `Activity` cũ trước đó)
-
-```kotlin
-loadAndShowAdCloseActivity(Activity.this, "ad_name") { // tên quảng cáo
-    //thực thi lệnh sau khi quảng cáo đã đóng
-}
-```
-
-- Hiển thị `Activity` tải quảng cáo và sau khi tải xong thì tự động hiển thị quảng cáo và thực hiện
+- Sử dụng `Dialog` tải quảng cáo và sau khi tải xong thì tự động hiển thị quảng cáo chèn giữa và thực hiện
   công việc sau đó. (ví dụ: Mở một `Activity` mới)
 
 ```kotlin
-loadAndShowAdOpenActivity(Activity.this, "ad_name") {// tên quảng cáo
+taymayDialogLoadAndShowAdInterstitial(this, "ad_name") {// tên quảng cáo
     //thực thi lệnh sau khi quảng cáo đã đóng
 }
 ```
 
-- Hiển thị quanrg cáo Interstitial, tải quảng cáo và sau khi tải xong thì tự động hiển thị quảng cáo
-  và thực hiện công việc sau đó. (ví dụ: Trên `Activity` thực hiện một hành động nào đó)
+- Sử dụng `AdInterActivity` tải quảng cáo và sau khi tải xong thì tự động hiển thị quảng cáo chèn giữa, đóng `AdInterActivity` thực hiện
+  công việc sau đó. (ví dụ: Mở một `Activity` mới) - Trường hợp này không nên sử dụng với `Navigation` vì sẽ gây ra lỗi do khác `Context`:
 
 ```kotlin
-loadAndShowAdInterstitial(Activity.this, "ad_name") {// tên quảng cáo
-    //thực thi lệnh sau khi quảng cáo đã đóng
+/*
+callback:
+- ad: Là đối tượng MyAd
+- activity: là activity chèn giữa tải quảng cáo
+  */
+taymayActivityLoadAndShowAdCallbackFor(this, "ad_name") { ad, activity ->
+
+}
+```
+
+- Sử dụng `AdInterActivity` tải quảng cáo và sau khi tải xong thì tự động hiển thị quảng cáo chèn giữa và gọi callback gọi lại nhưng không tự động `destroy()` `AdInterActivity`. (ví dụ: Mở một `Activity` mới) - Trường hợp này không nên sử dụng với `Navigation` vì sẽ gây ra lỗi do khác `Context`:
+
+```kotlin
+/*
+callback:
+- ad: Là đối tượng MyAd
+- activity: là activity chèn giữa tải quảng cáo
+  */
+taymayActivityLoadAndShowAdCallbackWaitFor(this, "ad_name") { ad, activity ->
+  activity.let {
+        if (it.isDestroyed) it.finish()
+    }
 }
 ```
 
 - Hiển thị Dialog tải quảng cáo, sử dụng để chờ tải quảng cáo về và sử dụng
 
 ```kotlin
-showDialogAdLoading(
+taymayShowDialogAdLoading(
     Activity.this,
         "adName", //Tên quảng cáo
     ) { isCanShow, // Quảng cáo có thể sử dụng được không
@@ -271,7 +372,7 @@ showDialogAdLoading(
   là `False` thì bạn nhớ set lại là `True` sau đó để quảng cáo có thể tiếp tục hiện)
 
 ```kotlin
-setCanShowAd(true/false)
+taymaySetCanShowAd(true/false)
 ```
 
 ## IV, Quảng cáo màn hình Intro/Tutorial và Cấu hình cài đặt
@@ -279,9 +380,6 @@ setCanShowAd(true/false)
 [[Lên Tốp]](#top) [[Xuống Cuối]](#bottom)
 
 Gói sử dụng `app.module.activities`
-
-> Bạn nên tải trước quảng cáo vì các phương thức này chỉ hiển thị quảng cáo khi quảng cáo đã được tải sẵn
-> Phương thức showDialogAdLoading() hỗ trợ hiện dialog tải quảng cáo và callback về trạng thái của quảng cáo
 
 - Hiển thị màn hình Intro/Tutorial thông qua đối tượng`IntroPager`:
 
@@ -291,15 +389,18 @@ Gói sử dụng `app.module.activities`
 ##### 1. `showIntroFromPages()` sử dụng các `IntroPager` để thiết lập các dữ liệu cho các `Page`
 
 ```kotlin
-// Cho phép khởi tạo bằng các đối tượng `IntroPager`
-fun showIntroFromPages(
+/**
+  * Cho phép khởi tạo bằng các đối tượng `IntroPager`
+  * isCanShowAd thể hiện đã show Intro và người dùng đã click Done thì có thể hiển thị được quảng cáo sau Intro trả về là true, còn nếu Intro đã hiển thị thì sẽ trả về false
+  */
+fun taymayShowIntroFromPages(
           context: Context,
           showType: ShowType, //tủy chọn hiển thị một lần hoặc nhiều lần
-          ad_name: String,// tên vị trí quảng cáo
-          adOn: AdOn,// Vị trí quảng cáo được sử dụng trong màn hình
+          ad_top_name: String,// tên vị trí quảng cáo
+          ad_bottom_name: String,// Vị trí quảng cáo được sử dụng trong màn hình
           backgroundDrawable: Int, // background của màn hình
           vararg introPager: IntroPager, // các IntroPager
-          runAfterDone: () -> Unit //callback được gọi lại khi kết thúc màn
+          runAfterDone: (isCanShowAd: Boolean) -> Unit //callback được gọi lại khi kết thúc màn
       )
 ```
 
@@ -308,9 +409,6 @@ enum class ShowType {
     Once, Multi
 }
 
-enum class AdOn {
-    Top, Bottom
-}
 class IntroPager(
     var isAnim: Boolean, // true là sử dụng animation thông qua file .json false là sử dụng thông qua ảnh từ drawable
     var image: Int,// true: R.raw.anim_tut_01 or false:  R.drawable.im_tut_1
@@ -327,8 +425,8 @@ class IntroPager(
  IntroActivity.showIntroFromPages(
                     context,
                     ShowType.Once,
-                    "intro_native",
-                    if (getDataBoolean("ad_on_intro_on_top", false)) AdOn.Top else AdOn.Bottom,
+                    "au:intro_top_small",
+                    "au:intro_bottom_small",
                     R.drawable.bg_tut,
                     IntroPager(
                         false,
@@ -368,15 +466,11 @@ enum class ShowType {
     Once, Multi
 }
 
-enum class AdOn {
-    Top, Bottom
-}
-
 fun showIntroFromViews(
     context: Context,
     showType: ShowType, //tủy chọn hiển thị một lần hoặc nhiều lần
-    ad_name: String,// tên vị trí quảng cáo
-    adOn: AdOn,// Vị trí quảng cáo được sử dụng trong màn hình
+    ad_top_name: String,
+    ad_bottom_name: String,
     backgroundDrawable: Int, // background của màn hình
     vararg view: View, // Các View của mỗi Page
     runAfterDone: () -> Unit
@@ -399,8 +493,8 @@ fun getImageView(context: Context, resId: Int): ImageView {
 IntroActivity.showIntroFromViews(
     context,
     ShowType.Once,
-    "intro_native",
-    if (getDataBoolean("ad_on_intro_on_top", false)) AdOn.Top else AdOn.Bottom,
+    "au:intro_top_small",
+    "au:intro_bottom_small",
     R.drawable.bg_tut,
     getImageView(context, R.drawable.im_tut_1),
     getImageView(context, R.drawable.im_tut_2),
@@ -436,15 +530,15 @@ IntroActivity.showIntroFromViews(
 - Lấy tên phiên bản và mã phiên bản:
 
 ```kotlin
-app.module.utils.getAppVersionName(this) // tên phiên bản
+app.module.utils.taymayGetAppVersionName(this) // tên phiên bản
 
-app.module.utils.getAppVersionCode(this) // mã phiên bản
+app.module.utils.taymayGetAppVersionCode(this) // mã phiên bản
 ```
 
 - Hiển thị Dialog xin Rate và Feedback từ lần thứ 2 vào lại App
 
 ```kotlin
-askRateAndFeedbackNextSession(Activity.this) { // hiển thị dialog xin rate từ lần thứ 2 vào app
+taymayAskRateAndFeedbackNextSession(Activity.this) { // hiển thị dialog xin rate từ lần thứ 2 vào app
     // được gọi sau khi dialog xin rate tắt
 }
 ```
@@ -452,7 +546,7 @@ askRateAndFeedbackNextSession(Activity.this) { // hiển thị dialog xin rate t
 - Hiển thị hỏi Dialog xin Rate và Reivew
 
 ```kotlin
-showDialogRateAndFeedback(this@VaultActivity) {
+taymayShowDialogRateAndFeedback(this@VaultActivity) {
 // được gọi sau khi dialog xin rate tắt
 }
 ```
@@ -460,32 +554,32 @@ showDialogRateAndFeedback(this@VaultActivity) {
 - Mở màn hình Policy
 
 ```kotlin
-openPolicyScreen(Activity.this,"policy.html")// tên file ở Assets
+taymayOpenPolicyActivity(Activity.this,"policy.html")// tên file ở Assets
 
 ```
 
 - Hiển thị Dialog xóa quảng cáo
 
 ```kotlin
-showDialogRemoveAd(Activity.this, "remove_ad,...,...", ,MainActivity::class.java) // tên của màn hình Activity được mở sau màn Splash, remove_ad là các mã id product cách nhau bằng `,`
+taymayShowDialogRemoveAd(Activity.this, "remove_ad,...,...", ,MainActivity::class.java) // tên của màn hình Activity được mở sau màn Splash, remove_ad là các mã id product cách nhau bằng `,`
 ```
 
 - Hiển thị Dialog xin Feedback
 
 ```kotlin
-showDialogFeedback(Activity.this) {  }
+taymayShowDialogFeedback(Activity.this) {  }
 ```
 
 - Hiển thị Dialog kiểm tra bản cập nhật App trên Google Play
 
 ```kotlin
-showDialogCheckAppOnGooglePlay(Activity.this)
+taymayShowDialogCheckAppOnStore(Activity.this)
 ```
 
 - Kiểm tra User đã xóa quảng cáo hay chưa
 
 ```kotlin
-if (isPayRemoveAd(Activity.this)) // true là đã xóa và ngược lại
+if (taymayIsPayRemoveAd(Activity.this)) // true là đã xóa và ngược lại
 activityAboutBinding.icGoogleByeAd.visibility =
     View.GONE
 
@@ -494,41 +588,27 @@ activityAboutBinding.icGoogleByeAd.visibility =
 - Kiểm tra sẽ hiển thị màn cài đặt ngôn ngữ:
 
 ```kotlin
-isWillShowLanguageSetup(activity) // true nếu màn cài ngôn ngữ chưa hiển thị lần nào, false là đã cài ngôn ngữ
+taymayIsWillShowLanguageSetup(activity) // true nếu màn cài ngôn ngữ chưa hiển thị lần nào, false là đã cài ngôn ngữ
 ```
 
 - Kiểm tra và mở màn hình chọn cài Language lần đầu tiên:
 
-> Bạn nên tải trước quảng cáo vì phương thức này chỉ hiển thị quảng cáo khi quảng cáo đã được tải sẵn
-> Phương thức showDialogAdLoading() hỗ trợ hiện dialog tải quảng cáo và callback về trạng thái của quảng cáo
-
 ```kotlin
 
-
-askSetupLanguage(Activity.this, "bottom_language"){
+taymayAskFirstSetupLanguage(Activity.this, "bottom_language"){
 // Thực hiện lệnh tiếp theo nếu đã kiểm tra cài đặt ngôn ngữ hoặc ngôn ngữ đã được cài xong
 }
 ```
 
-```kotlin
-// Mẫu cài đặt tải và hiển thị màn cài đặt ngôn ngữ
-if (isWillShowLanguageSetup(this)) {
-      showDialogAdLoading(this, "tên quảng cáo") { isCanShow, myAd ->
-          if (isCanShow) askSetupLanguage(this, "tên quảng cáo màn") {
-              goToMain()
-          } else
-              goToMain()
-      }
-  } else
-      goToMain()
-
-
-```
-
-- Mở màn hinh cài đặt ngôn ngữ
+- Mở màn hinh cài đặt ngôn ngữ, nếu cài đặt thành công thì sẽ restart lại App
 
 ```kotlin
-openSetLangActivity(Activity.this,"<tên vị trí quảng cáo>", <màn_home>::class.java) // nếu cài đặt ngôn ngữ cần phải restart lại app bằng cách mở màn home
+taymayOpenSetLangActivity(this, "au:language_top_small", "language_bottom_medium") {
+        startActivity(Intent(this, AppSplash::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+        finish()
+}
 ```
 
 - Thêm Icon vào giao diện để mở màn hình More App
@@ -549,13 +629,16 @@ openSetLangActivity(Activity.this,"<tên vị trí quảng cáo>", <màn_home>::
 - Cú pháp mở màn hình More App
 
 ```kotlin
-openMoreAppActivity(Activity.this)
+taymayOpenMoreAppActivity(Activity.this)
 ```
 
 - Cú pháp mở màn hình quảng cáo thoát App
 
 ```kotlin
-askExitApp(Activity.this,"exit_app")
+taymayAskExitApp(this, "au:exit_app_medium", 1500) {
+    it.finishAffinity() // Thoát ExitActivity
+    finishAffinity() // Thoát App
+}
 ```
 
 - Theo dõi các sự kiện thông qua `Firebase`
@@ -564,9 +647,9 @@ askExitApp(Activity.this,"exit_app")
 
 ```kotlin
 // đơn giản để track một sự kiện
-firebaseEventTracking(Activity.this,event ="home_click_button")
+taymayFirebaseEventTracking(Activity.this,event ="home_click_button")
 // nếu cần thêm các tham số kèm theo
-firebaseEventTracking(Activity.this,event ="home_click_button" ,Pair("arg1",""), Pair("agr2",1))
+taymayFirebaseEventTracking(Activity.this,event ="home_click_button" ,Pair("arg1",""), Pair("agr2",1))
 ```
 
 - Bật/Tắt chế độ DebugView để kiểm tra lại việc gắn các sự kiện:
@@ -585,7 +668,13 @@ adb shell setprop debug.firebase.analytics.app .none.
 - Theo dõi các màn hình thông qua `Firebase`
 
 ```kotlin
-firebaseScreenTracking(Activity.this, screen_name, screen_class)
+taymayFirebaseScreenTracking(Activity.this, screen_name, screen_class)
+```
+
+- Thêm vô `Manifest` nếu sử dụng `taymayFirebaseScreenTracking` để tắt tự động Log các màn hình mặc định:
+
+```xml
+<meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="false" />
 ```
 
 [Chi tiết Measure screenviews](https://firebase.google.com/docs/analytics/screenviews)
@@ -599,10 +688,10 @@ dạng `key:value` để với `key` là dạng string và `value` thì hỗ tr�
 
 ```kotlin
 
-logString(key, value) // log lên đoạn văn bản, với value có thể là string hoặc json string
-logLong(key, value) // log giá trị `long`
-logDouble(key, value) // log giá trị `double`
-logData(key, string_value, long_value, double_value) //nếu log chứa nhiều giá trị khác nhau
+taymayLog(key, string_value) // log lên đoạn văn bản, với value có thể là string hoặc json string
+taymayLog(key, long_value) // log giá trị `long`
+taymayLog(key, double_value) // log giá trị `double`
+taymayLog(key, string_value, long_value, double_value) //nếu log chứa nhiều giá trị khác nhau
 ```
 
 Các `log` sẽ tự động lấy thêm thông tin kèm các thông tin từ các phương thức trên:
@@ -616,9 +705,9 @@ Các `log` sẽ tự động lấy thêm thông tin kèm các thông tin từ c�
 - Lấy thông tin về Quốc Gia thông qua địa chỉ IP của `User`
 
 ```kotlin
-    getGeoIP {
-it // là đối tượng  GeoIP
-        }
+taymayGetGeoIP {
+  it // là đối tượng  GeoIP
+}
 ```
 
 ```kotlin
@@ -637,19 +726,41 @@ GeoIP(
 - Lấy `UserID`: trả về id của user
 
 ```kotlin
-getUserID(context)
+taymayGetUserID(context)
 ```
 
 - Tải một File băng URL
 
 ```kotlin
 
-downloadFile(
-   "rl,
+taymayDownloadFileFromUrl(
+   url,
     file_out
-) { b -> elog(b, "-----------------") }
-
+) { b ->
+}
 ```
+
+- Mở `Activity` mới và clear tất cả các `Activity` ở Dưới:
+
+```kotlin
+  taymayClearStackAndGoActivity(ActivityA::class.java)
+```
+
+- `POST`,`GET` `json` từ `URL`:
+
+```kotlin
+
+taymayGetJsonFromUrlByKtor(url: String, defaultVault: String, callback: (res: String) -> Unit)
+
+taymayPostJsonToUrlByKtor(
+    server: String,
+    json: String,
+    defaultVault: String,
+    callback: (res: String) -> Unit
+)
+```
+
+
 
 ## VI, Hệ thống cấu hình dữ liệu trong App
 
@@ -726,16 +837,16 @@ data class DataConfig(
 ```kotlin
 
 // lấy giá trị String từ 1 key
-var dataString = getDataString("<tên key>", "<giá trị mặc định>")
+var dataString = taymayGetDataString("<tên key>", "<giá trị mặc định>")
 
 // lấy giá trị Boolean từ 1 key
-var dataBoolean = getDataBoolean("<tên key>", <giá trị mặc định>)
+var dataBoolean =  taymayGetDataBoolean("<tên key>", <giá trị mặc định>)
 
 // lấy giá trị Double từ 1 key
-var dataDouble = getDataDouble("<tên key>", <giá trị mặc định>)
+var dataDouble = taymayGetDataDouble("<tên key>", <giá trị mặc định>)
 
 // lấy giá trị Long từ 1 key
-var dataLong = getDataLong("<tên key>", <giá trị mặc định>)
+var dataLong = taymayGetDataLong("<tên key>", <giá trị mặc định>)
 
 ```
 

@@ -10,7 +10,7 @@ import com.taymay.chatbot.BuildConfig
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        AD_CONFIG_VERSION_DEFAULT = "test"
+//        AD_CONFIG_VERSION_DEFAULT = "test"
 //        DATA_CONFIG_VERSION_DEFAULT = "default"
         IS_TESTING = BuildConfig.DEBUG
         HASH_UMP_TEST = "137E352EEFAF0422571EC5990F502A56"
