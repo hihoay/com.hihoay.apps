@@ -23,7 +23,7 @@ import app.module.utils.adsConfig
 import app.module.utils.elog
 import app.module.utils.taymayGetRemoteData
 import app.module.utils.taymayIsPayRemoveAd
-import app.module.utils.taymayLogString
+import app.module.utils.taymayLog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +54,7 @@ fun getAdsRemote(ready: () -> Unit) {
             elog("link_remote", link_remote)
             getAdConfigFromRemote({
                 try {
-                    TaymayContext.taymayLogString("ad_configs", "remote")
+                    TaymayContext.taymayLog("ad_configs", "remote")
                 } catch (e: Exception) {
                 }
                 taymayGetJsonFromUrlByKtor(
@@ -63,7 +63,7 @@ fun getAdsRemote(ready: () -> Unit) {
                 ) { res ->
                     if (res != "[]") {
                         try {
-                            TaymayContext.taymayLogString("ad_configs", "default")
+                            TaymayContext.taymayLog("ad_configs", "default")
                         } catch (e: Exception) {
                         }
                         elog("ad_version from remote")
@@ -78,15 +78,13 @@ fun getAdsRemote(ready: () -> Unit) {
                 ) {
                     if (it != "[]") {
                         try {
-                            TaymayContext.taymayLogString("ad_configs", "default")
+                            TaymayContext.taymayLog("ad_configs", "default")
                         } catch (e: Exception) {
                         }
                         elog("ad_version from default")
                     }
                     initAds(ad_version, it)
-
                 }
-
             })
         }
         val startTime = System.currentTimeMillis()
@@ -102,7 +100,7 @@ fun getAdsRemote(ready: () -> Unit) {
 
         if (adsConfig.isEmpty() && MyConnection.taymayIsOnline(TaymayContext)) {
             try {
-                TaymayContext.taymayLogString("ad_configs", "assets")
+                TaymayContext.taymayLog("ad_configs", "assets")
             } catch (e: Exception) {
             }
             elog("ad_version from assets")

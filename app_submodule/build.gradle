@@ -91,7 +91,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:22.6.0'
 
     implementation 'com.google.ads.mediation:facebook:6.16.0.0'
-    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'commons-io:commons-io:2.11.0' // not update this
     implementation 'com.google.android.ump:user-messaging-platform:2.2.0'
     implementation 'me.relex:circleindicator:2.1.6'
 
@@ -108,7 +108,7 @@ publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.hihoay'
-            artifactId = 'app'
+            artifactId = 'apps'
             version = '1.0.0'
             afterEvaluate {
                 from components.release

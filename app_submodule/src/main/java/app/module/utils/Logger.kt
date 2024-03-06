@@ -22,8 +22,7 @@ data class Data(
 
 fun Context.taymayGetAppVersionCode(): String {
     try {
-        val pInfo: PackageInfo =
-            getPackageManager().getPackageInfo(getPackageName(), 0)
+        val pInfo: PackageInfo = getPackageManager().getPackageInfo(getPackageName(), 0)
         val versionName: String = pInfo.versionCode.toString()
 
         return versionName
@@ -31,7 +30,6 @@ fun Context.taymayGetAppVersionCode(): String {
         e.printStackTrace()
     }
     return "-";
-
 }
 
 fun Context.taymayGetAppVersionName(): String {
@@ -49,7 +47,7 @@ fun Context.taymayGetAppVersionName(): String {
 
 }
 
-fun Context.taymayLogDataNoGeo(
+fun Context.taymayLogNoGeo(
     key: String,
     string_value: String = "",
     long_value: Long = 0,
@@ -65,11 +63,67 @@ fun Context.taymayLogDataNoGeo(
         long_value = long_value,
         double_value = double_value,
     )
-    taymayPostJsonToUrlByKtor("https://bot.taymay.io/logger", Gson().toJson(data), "") {}
+    taymayPostJsonToUrlByKtor(LOG_HOST, Gson().toJson(data), "") {}
 
 }
 
-fun Context.taymayLogData(
+fun Context.taymayLog(
+    dimen: String,
+    metric: Double = 0.0,
+) {
+    taymayGetGeoIP {
+        var data = Data(
+            uid = taymayGetUserID(this)!!,
+            from = packageName,
+            version_code = taymayGetAppVersionCode(),
+            version_name = taymayGetAppVersionName(),
+            key = dimen,
+            double_value = metric,
+            json_value = it.jsonOriginal
+        )
+        taymayPostJsonToUrlByKtor(LOG_HOST, Gson().toJson(data), "") {}
+    }
+}
+
+
+fun Context.taymayLog(
+    dimen: String,
+    metric: Long = 0,
+) {
+    taymayGetGeoIP {
+        var data = Data(
+            uid = taymayGetUserID(this)!!,
+            from = packageName,
+            version_code = taymayGetAppVersionCode(),
+            version_name = taymayGetAppVersionName(),
+            key = dimen,
+            long_value = metric,
+            json_value = it.jsonOriginal
+        )
+        taymayPostJsonToUrlByKtor(LOG_HOST, Gson().toJson(data), "") {}
+    }
+}
+
+fun Context.taymayLog(
+    dimen: String,
+    metric: String = "",
+) {
+    taymayGetGeoIP {
+        var data = Data(
+            uid = taymayGetUserID(this)!!,
+            from = packageName,
+            version_code = taymayGetAppVersionCode(),
+            version_name = taymayGetAppVersionName(),
+            key = dimen,
+            string_value = metric,
+            json_value = it.jsonOriginal
+        )
+        taymayPostJsonToUrlByKtor(LOG_HOST, Gson().toJson(data), "") {}
+    }
+}
+
+
+fun Context.taymayLog(
     key: String,
     string_value: String = "",
     long_value: Long = 0,
@@ -88,56 +142,7 @@ fun Context.taymayLogData(
             json_value = it.jsonOriginal
         )
 
-        taymayPostJsonToUrlByKtor("https://bot.taymay.io/logger", Gson().toJson(data), "") {}
-    }
-
-}
-
-
-fun Context.taymayLogString(key: String, string: String) {
-    taymayGetGeoIP {
-        var data = Data(
-            uid = taymayGetUserID(this)!!,
-            from = packageName,
-            version_code = taymayGetAppVersionCode(),
-            version_name = taymayGetAppVersionName(),
-            key = key,
-            string_value = string,
-            json_value = it.jsonOriginal
-        )
-
-        taymayPostJsonToUrlByKtor("https://bot.taymay.io/logger", Gson().toJson(data), "") {}
-    }
-
-}
-
-fun Context.taymayLogLong(key: String, longValue: Long) {
-    taymayGetGeoIP {
-        var data = Data(
-            uid = taymayGetUserID(this)!!,
-            from = packageName,
-            version_code = taymayGetAppVersionCode(),
-            version_name = taymayGetAppVersionName(),
-            key = key,
-            long_value = longValue,
-            json_value = it.jsonOriginal
-        )
-        taymayPostJsonToUrlByKtor("https://bot.taymay.io/logger", Gson().toJson(data), "") {}
-    }
-}
-
-fun Context.taymayLogDouble(key: String, double_value: Double) {
-    taymayGetGeoIP {
-        var data = Data(
-            uid = taymayGetUserID(this)!!,
-            from = packageName,
-            version_code = taymayGetAppVersionCode(),
-            version_name = taymayGetAppVersionName(),
-            key = key,
-            double_value = double_value,
-            json_value = it.jsonOriginal
-        )
-        taymayPostJsonToUrlByKtor("https://bot.taymay.io/logger", Gson().toJson(data), "") {}
+        taymayPostJsonToUrlByKtor(LOG_HOST, Gson().toJson(data), "") {}
     }
 
 }

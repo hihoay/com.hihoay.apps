@@ -16,7 +16,7 @@ import app.module.lang.timerInterval
 import app.module.objecs.taymayGetJsonFromUrlByKtor
 import app.module.utils.MyFile
 import app.module.utils.taymayFirebaseScreenTracking
-import app.module.utils.taymayLogString
+import app.module.utils.taymayLog
 import com.bumptech.glide.Glide
 import com.frogobox.recycler.core.FrogoRecyclerNotifyListener
 import com.frogobox.recycler.core.IFrogoBindingAdapter
@@ -72,7 +72,7 @@ class MoreAppActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Firebase.analytics.logEvent("cross_open", Bundle())
-        taymayLogString("request", "more_apps")
+        taymayLog("request", "more_apps")
 
         initView()
 
@@ -156,7 +156,7 @@ class MoreAppActivity : Activity() {
 
         dialogConfirmToPlayBinding.tvOpen.setOnClickListener {
             Firebase.analytics.logEvent("dialog_cross_click_open", Bundle())
-            taymayLogString("open_play", data.package_app)
+            taymayLog("open_play", data.package_app)
 
             val browserIntent = Intent(
                 Intent.ACTION_VIEW, Uri.parse(
@@ -265,7 +265,7 @@ class MoreAppActivity : Activity() {
         binding = MoreAppActivityBinding.inflate(layoutInflater)
         binding.swipeRefresh.setOnRefreshListener {
 
-            taymayLogString("request", "more_apps")
+            taymayLog("request", "more_apps")
 
             loadAndShowData()
         }

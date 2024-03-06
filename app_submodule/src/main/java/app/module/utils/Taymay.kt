@@ -213,7 +213,7 @@ fun taymaySetupApplication(application: Application, idProducts: String) {
     var upCount = application.upCount("open_time", 1, 0).toLong()
     elog("upCount", upCount)
     taymayGetGeoIP {
-        application.taymayLogData("open_app_time", long_value = upCount, string_value = it.jsonOriginal)
+        application.taymayLog("open_app_time", long_value = upCount, string_value = it.jsonOriginal)
     }
     TaymayContext = application
     TaymayApplication = application
@@ -256,7 +256,7 @@ private fun taymayInitAds() {
         }
 
         override fun onProductPurchased(purchaseInfo: DataWrappers.PurchaseInfo) {
-            TaymayApplication.taymayLogString("onProductPurchased-loader", purchaseInfo.originalJson)
+            TaymayApplication.taymayLog("onProductPurchased-loader", purchaseInfo.originalJson)
             MyCache.putBooleanValueByName(
                 TaymayApplication,
                 IS_PREMIUM,
@@ -265,7 +265,7 @@ private fun taymayInitAds() {
         }
 
         override fun onProductRestored(purchaseInfo: DataWrappers.PurchaseInfo) {
-            TaymayApplication.taymayLogString("onProductRestored-loader", purchaseInfo.originalJson)
+            TaymayApplication.taymayLog("onProductRestored-loader", purchaseInfo.originalJson)
             if (purchaseInfo.sku in listNonCons) MyCache.putBooleanValueByName(
                 TaymayApplication,
                 IS_PREMIUM,

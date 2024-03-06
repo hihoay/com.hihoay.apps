@@ -49,7 +49,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'me.relex:circleindicator:2.1.6'
     implementation project(path: ':app_submodule')
-    implementation("com.google.android.ump:user-messaging-platform:2.1.0")
+    implementation("com.google.android.ump:user-messaging-platform:2.2.0")
 
 
 

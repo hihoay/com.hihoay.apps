@@ -19,7 +19,7 @@ import app.module.utils.MyCache
 import app.module.utils.TaymayApplication
 import app.module.utils.elog
 import app.module.utils.taymayGetGeoIP
-import app.module.utils.taymayLogString
+import app.module.utils.taymayLog
 import com.limurse.iap.DataWrappers
 import com.limurse.iap.IapConnector
 import com.limurse.iap.PurchaseServiceListener
@@ -47,9 +47,9 @@ class DialogRemoveAd(var context: Activity) {
     companion object {
         fun logToServer(purchaseInfo: DataWrappers.PurchaseInfo) {
             try {
-                TaymayApplication.taymayLogString("purchased", purchaseInfo.originalJson)
+                TaymayApplication.taymayLog("purchased", purchaseInfo.originalJson)
                 taymayGetGeoIP {
-                    TaymayApplication.taymayLogString(
+                    TaymayApplication.taymayLog(
                         "buy-${purchaseInfo.sku}",
                         "${it.country_code}:${purchaseInfo.orderId}"
                     )
@@ -93,7 +93,7 @@ class DialogRemoveAd(var context: Activity) {
         }
 
         override fun onProductRestored(purchaseInfo: DataWrappers.PurchaseInfo) {
-            TaymayApplication.taymayLogString("onProductRestored-dialog", purchaseInfo.originalJson)
+            TaymayApplication.taymayLog("onProductRestored-dialog", purchaseInfo.originalJson)
             if (purchaseInfo.sku in nonCons)
                 MyCache.putBooleanValueByName(
                     TaymayApplication,

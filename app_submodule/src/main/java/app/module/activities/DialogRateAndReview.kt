@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import app.module.R
 import app.module.databinding.LayoutDialogRateAndFeedbackBinding
 import app.module.utils.MyCache
-import app.module.utils.taymayLogString
+import app.module.utils.taymayLog
 
 class DialogRateAndReview {
 
@@ -122,7 +122,7 @@ class DialogRateAndReview {
                             //   eventLog(context, "rate_rate_"+rate);
                             val txt_feedback =
                                 layoutDialogRateAndFeedbackBinding.edtFeedback.text.toString()
-                            if (!txt_feedback.isEmpty()) context.taymayLogString(
+                            if (!txt_feedback.isEmpty()) context.taymayLog(
                                 "feedback", txt_feedback
                             )
 //                           Log(adApp, "feedback", txt_feedback);
