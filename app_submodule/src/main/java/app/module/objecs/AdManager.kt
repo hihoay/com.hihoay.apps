@@ -1,10 +1,10 @@
 package app.module.objecs
 
+import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
 import app.module.admob.AdmobManager
 import app.module.databinding.DiglogLoadAdBinding
 import app.module.enums.AdFormat
@@ -53,19 +53,19 @@ fun getAdsRemote(ready: () -> Unit) {
         launch {
             elog("link_remote", link_remote)
             getAdConfigFromRemote({
-                try {
-                    TaymayContext.taymayLog("ad_configs", "remote")
-                } catch (e: Exception) {
-                }
+//                try {
+//                    TaymayContext.taymayLog("ad_configs", "remote")
+//                } catch (e: Exception) {
+//                }
                 taymayGetJsonFromUrlByKtor(
                     link_remote,
                     "[]"
                 ) { res ->
                     if (res != "[]") {
-                        try {
-                            TaymayContext.taymayLog("ad_configs", "default")
-                        } catch (e: Exception) {
-                        }
+//                        try {
+//                            TaymayContext.taymayLog("ad_configs", "default")
+//                        } catch (e: Exception) {
+//                        }
                         elog("ad_version from remote")
                     }
                     initAds(it, res)
@@ -77,10 +77,10 @@ fun getAdsRemote(ready: () -> Unit) {
                     "[]"
                 ) {
                     if (it != "[]") {
-                        try {
-                            TaymayContext.taymayLog("ad_configs", "default")
-                        } catch (e: Exception) {
-                        }
+//                        try {
+//                            TaymayContext.taymayLog("ad_configs", "default")
+//                        } catch (e: Exception) {
+//                        }
                         elog("ad_version from default")
                     }
                     initAds(ad_version, it)
@@ -99,10 +99,10 @@ fun getAdsRemote(ready: () -> Unit) {
         elog("getAdsRemote timeout")
 
         if (adsConfig.isEmpty() && MyConnection.taymayIsOnline(TaymayContext)) {
-            try {
-                TaymayContext.taymayLog("ad_configs", "assets")
-            } catch (e: Exception) {
-            }
+//            try {
+//                TaymayContext.taymayLog("ad_configs", "assets")
+//            } catch (e: Exception) {
+//            }
             elog("ad_version from assets")
             initAds(
                 AD_CONFIG_VERSION_DEFAULT,

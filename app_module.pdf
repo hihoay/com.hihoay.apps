@@ -428,7 +428,7 @@ blockquote {
 <li>Thêm vô <code>build.gradle</code>:</li>
 </ol>
 <ul>
-<li>Phiên bản: <a href="https://jitpack.io/private#hihoay/com.hihoay.apps"><img src="https://jitpack.io/v/com.github.hihoay/com.hihoay.apps.svg" alt=""></a></li>
+<li>Phiên bản: <a href="https://jitpack.io/hihoay/com.hihoay.apps"><img src="https://jitpack.io/v/com.github.hihoay/com.hihoay.apps.svg" alt=""></a></li>
 </ul>
 <pre class="hljs"><code><div>  implementation <span class="hljs-string">'com.github.hihoay:com.hihoay.apps:&lt;version_name&gt;'</span>
 </div></code></pre>
@@ -457,7 +457,7 @@ blockquote {
 dụng sẽ in ra đường dẫn chứa nội dung của tệp <code>copy</code> nội dung từ đường dẫn và <code>dán</code> vào
 tệp <code>ads.json</code>, đường dẫn định dạng sau:</li>
 </ul>
-<pre class="hljs"><code><div>---------------------&gt;ad_version   https://bot.taymay.io/ad_version/&lt;app_package_name&gt;.json
+<pre class="hljs"><code><div>ad_version   https://bot.taymay.io/ad_version/&lt;app_package_name&gt;.json
 </div></code></pre>
 <blockquote>
 <p><code>data.json</code> là tập cấu hình mặc định các dữ liệu sử dụng.</p>
@@ -467,7 +467,7 @@ tệp <code>ads.json</code>, đường dẫn định dạng sau:</li>
 dụng sẽ in ra đường dẫn chứa nội dung của tệp <code>copy</code> nội dung từ đường dẫn và <code>dán</code> vào
 tệp <code>data.json</code>, đường dẫn có định dạng sau:</li>
 </ul>
-<pre class="hljs"><code><div>---------------------&gt;data_version   https://bot.taymay.io/data_version/&lt;app_package_name&gt;.json
+<pre class="hljs"><code><div>data_version   https://bot.taymay.io/data_version/&lt;app_package_name&gt;.json
 </div></code></pre>
 <h2 id="ii-c%C3%A0i-%C4%91%E1%BA%B7t-t%E1%BA%A3i-c%E1%BA%A5u-h%C3%ACnh-qu%E1%BA%A3ng-c%C3%A1o">II, Cài đặt tải cấu hình quảng cáo</h2>
 <p><a href="#top">[Lên Tốp]</a> <a href="#bottom">[Xuống Cuối]</a></p>

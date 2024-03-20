@@ -4,9 +4,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven { url 'https://jitpack.io' }
-
-
-
     }
 }
 dependencyResolutionManagement {
@@ -16,10 +13,6 @@ dependencyResolutionManagement {
         mavenCentral()
         gradlePluginPortal()
         maven { url 'https://jitpack.io' }
-
-
-     
-
     }
 }
 include ':app'
