@@ -15,14 +15,35 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import app.module.R
-import app.module.activities.*
+import app.module.activities.AdInterActivity
+import app.module.activities.DialogRateAndReview
+import app.module.activities.DialogRemoveAd
+import app.module.activities.ExitAppActivity
+import app.module.activities.MoreAppActivity
 import app.module.activities.MoreAppActivity.Companion.initMoreAppData
+import app.module.activities.PolicyActivity
+import app.module.activities.SetupLanguageActivity
 import app.module.enums.AdFormat
 import app.module.enums.AdNet
 import app.module.enums.AdState
 import app.module.lang.getData
 import app.module.lang.timerInterval
-import app.module.objecs.*
+import app.module.objecs.AdmobAdOpen
+import app.module.objecs.MyAd
+import app.module.objecs.getAdByAdName
+import app.module.objecs.getAdsRemote
+import app.module.objecs.initDataVersion
+import app.module.objecs.isAdLoaded
+import app.module.objecs.isHasAd
+import app.module.objecs.loadAd
+import app.module.objecs.loadAdsInBackgroud
+import app.module.objecs.loadAndShowAd
+import app.module.objecs.loadAndShowAdInLayout
+import app.module.objecs.showAd
+import app.module.objecs.showDialogLoadAd
+import app.module.objecs.taymayGetDataDouble
+import app.module.objecs.taymayGetDataLong
+import app.module.objecs.taymayGetDataString
 import app.module.views.getLines
 import com.google.android.gms.ads.MobileAds
 import com.google.android.ump.ConsentDebugSettings
@@ -36,10 +57,12 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.limurse.iap.DataWrappers
 import com.limurse.iap.IapConnector
 import com.limurse.iap.PurchaseServiceListener
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URL
-import java.util.*
+import java.util.Arrays
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -110,7 +133,6 @@ fun getConsentInformation(context: Context): ConsentInformation {
 }
 
 fun taymayInitUMP(context: Activity, onInited: (Boolean, ConsentInformation) -> Unit) {
-
     isMobileAdsInitializeCalled.set(false)
     var consentInformation = getConsentInformation(context)
     val debugSettings = ConsentDebugSettings.Builder(context)

@@ -13,7 +13,7 @@ class App : Application() {
 //        AD_CONFIG_VERSION_DEFAULT = "test"
 //        DATA_CONFIG_VERSION_DEFAULT = "default"
         IS_TESTING = BuildConfig.DEBUG
-        HASH_UMP_TEST = "137E352EEFAF0422571EC5990F502A56"
+        HASH_UMP_TEST = "F7EB8E91BAB6191FA8F87015557D41A5"
         taymaySetupApplication(this, "remove_ad,upgrade_01")
     }
 }
