@@ -76,21 +76,27 @@ lateinit var TaymayContext: Context
 lateinit var TaymayApplication: Application
 private lateinit var consentInformation: ConsentInformation
 private var isMobileAdsInitializeCalled = AtomicBoolean(false)
+private val isCalled = AtomicBoolean(false)
+
 
 fun taymayGetAdVersion(context: Context, readyToUse: () -> Unit) {
 
     TaymayContext = context
-
-    taymayInitAds()
-    initDataVersion(TaymayContext) {
-    }
-
-    getAdsRemote {
-        val handler = Handler(Looper.getMainLooper())
-        handler.post {
-            readyToUse()
+    taymayInitUMP(context as Activity) { b, consentInformation ->
+        if (isCalled.compareAndSet(false, true)) {
+            taymayInitAds()
+            initDataVersion(TaymayContext) {}
+            getAdsRemote {
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    readyToUse()
+                }
+            }
         }
+
+
     }
+
 
 //    try {
 //        (context as Activity).initUMP { b, consentInformation -> }

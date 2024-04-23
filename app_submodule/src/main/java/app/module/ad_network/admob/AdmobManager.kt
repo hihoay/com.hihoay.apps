@@ -1,4 +1,4 @@
-package app.module.admob
+package app.module.ad_network.admob
 
 import android.content.Context
 import android.util.DisplayMetrics

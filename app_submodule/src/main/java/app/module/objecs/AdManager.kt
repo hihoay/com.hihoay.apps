@@ -5,7 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import app.module.admob.AdmobManager
+import app.module.ad_network.admob.AdmobManager
 import app.module.databinding.DiglogLoadAdBinding
 import app.module.enums.AdFormat
 import app.module.enums.AdNet
