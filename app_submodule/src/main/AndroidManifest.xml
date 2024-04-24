@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/noAnimTheme">
         <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
+            android:value="true" />
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
+            android:value="true" />
+        <meta-data
             android:name="applovin.sdk.key"
             android:value="Uv7B2KLAtglWJ8xQ_M1Dhal7CphG7bmabLi7Strwhn1hBOGkAxUeoLKfIkpJG51G6F6NIVyOcvMQG9LWTP5AKJ" />
         <meta-data
