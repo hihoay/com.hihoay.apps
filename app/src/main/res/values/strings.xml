@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">com.taymay.app</string>
+    <string name="show_intro">Show Intro</string>
+    <string name="open_set_lang">Open Set Lang</string>
 </resources>
